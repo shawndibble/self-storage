@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Test Standard" namespace="Tests">
+    <rule ref="PSR12">
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+    </rule>
+</ruleset>

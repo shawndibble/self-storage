@@ -47,4 +47,19 @@ class User extends Authenticatable
     {
         return (bool)$this->is_admin;
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function storageUnits()
+    {
+        return $this->hasMany(StorageUnit::class);
+    }
 }

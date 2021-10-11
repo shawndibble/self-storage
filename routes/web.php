@@ -25,13 +25,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
     Route::resource('users', UserController::class)->except(['edit']);
+    Route::resource('size', App\Http\Controllers\SizeController::class);
+    Route::resource('storage-unit', App\Http\Controllers\StorageUnitController::class);
+    Route::resource('invoice', App\Http\Controllers\InvoiceController::class);
+    Route::resource('payment', App\Http\Controllers\PaymentController::class);
 });
-
 
 require __DIR__ . '/auth.php';

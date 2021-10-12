@@ -5,86 +5,74 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorageUnitStoreRequest;
 use App\Http\Requests\StorageUnitUpdateRequest;
 use App\Models\StorageUnit;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class StorageUnitController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(): Response
     {
         $storageUnits = StorageUnit::all();
 
-        return view('storageUnit.index', compact('storageUnits'));
+        return Inertia::render('StorageUnit/Index', compact('storageUnits'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(): Response
     {
-        return view('storageUnit.create');
+        return Inertia::render('StorageUnit/Create');
     }
 
     /**
-     * @param \App\Http\Requests\StorageUnitStoreRequest $request
-     * @return \Illuminate\Http\Response
+     * @param StorageUnitStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(StorageUnitStoreRequest $request)
+    public function store(StorageUnitStoreRequest $request): RedirectResponse
     {
         $storageUnit = StorageUnit::create($request->validated());
 
         $request->session()->flash('storageUnit.id', $storageUnit->id);
 
-        return redirect()->route('storageUnit.index');
+        return back()->with('message', 'Unit Created Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\StorageUnit $storageUnit
-     * @return \Illuminate\Http\Response
+     * @param StorageUnit $storageUnit
+     * @return Response
      */
-    public function show(Request $request, StorageUnit $storageUnit)
+    public function show(StorageUnit $storageUnit): Response
     {
-        return view('storageUnit.show', compact('storageUnit'));
+        return Inertia::render('StorageUnit/Show', compact('storageUnit'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\StorageUnit $storageUnit
-     * @return \Illuminate\Http\Response
+     * @param StorageUnitUpdateRequest $request
+     * @param StorageUnit $storageUnit
+     * @return RedirectResponse
      */
-    public function edit(Request $request, StorageUnit $storageUnit)
-    {
-        return view('storageUnit.edit', compact('storageUnit'));
-    }
-
-    /**
-     * @param \App\Http\Requests\StorageUnitUpdateRequest $request
-     * @param \App\Models\StorageUnit $storageUnit
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StorageUnitUpdateRequest $request, StorageUnit $storageUnit)
+    public function update(StorageUnitUpdateRequest $request, StorageUnit $storageUnit): RedirectResponse
     {
         $storageUnit->update($request->validated());
 
         $request->session()->flash('storageUnit.id', $storageUnit->id);
 
-        return redirect()->route('storageUnit.index');
+        return back()->with('message', 'Unit Updated Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\StorageUnit $storageUnit
-     * @return \Illuminate\Http\Response
+     * @param StorageUnit $storageUnit
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, StorageUnit $storageUnit)
+    public function destroy(StorageUnit $storageUnit): RedirectResponse
     {
         $storageUnit->delete();
 
-        return redirect()->route('storageUnit.index');
+        return back()->with('message', 'Unit Deleted Successfully.');
     }
 }

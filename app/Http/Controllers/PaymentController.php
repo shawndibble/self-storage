@@ -5,86 +5,73 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PaymentStoreRequest;
 use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Payment;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PaymentController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(): Response
     {
         $payments = Payment::all();
-
-        return view('payment.index', compact('payments'));
+        return Inertia::render('Payments/Index', compact('payments'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(): Response
     {
-        return view('payment.create');
+        return Inertia::render('Payments/Create');
     }
 
     /**
-     * @param \App\Http\Requests\PaymentStoreRequest $request
-     * @return \Illuminate\Http\Response
+     * @param PaymentStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(PaymentStoreRequest $request)
+    public function store(PaymentStoreRequest $request): RedirectResponse
     {
         $payment = Payment::create($request->validated());
 
         $request->session()->flash('payment.id', $payment->id);
 
-        return redirect()->route('payment.index');
+        return back()->with('message', 'Payment Recorded Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Payment $payment
-     * @return \Illuminate\Http\Response
+     * @param Payment $payment
+     * @return Response
      */
-    public function show(Request $request, Payment $payment)
+    public function show(Payment $payment): Response
     {
-        return view('payment.show', compact('payment'));
+        return Inertia::render('Payments/Show', compact('payment'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Payment $payment
-     * @return \Illuminate\Http\Response
+     * @param PaymentUpdateRequest $request
+     * @param Payment $payment
+     * @return RedirectResponse
      */
-    public function edit(Request $request, Payment $payment)
-    {
-        return view('payment.edit', compact('payment'));
-    }
-
-    /**
-     * @param \App\Http\Requests\PaymentUpdateRequest $request
-     * @param \App\Models\Payment $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(PaymentUpdateRequest $request, Payment $payment)
+    public function update(PaymentUpdateRequest $request, Payment $payment): RedirectResponse
     {
         $payment->update($request->validated());
 
         $request->session()->flash('payment.id', $payment->id);
 
-        return redirect()->route('payment.index');
+        return back()->with('message', 'Payment Updated Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Payment $payment
-     * @return \Illuminate\Http\Response
+     * @param Payment $payment
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Payment $payment)
+    public function destroy(Payment $payment): RedirectResponse
     {
         $payment->delete();
 
-        return redirect()->route('payment.index');
+        return back()->with('message', 'Payment Deleted Successfully.');
     }
 }

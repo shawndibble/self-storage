@@ -26,8 +26,8 @@ class PaymentUpdateRequest extends FormRequest
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'invoice_id' => ['required', 'integer', 'exists:invoices,id'],
-            'amount' => ['required', 'integer'],
-            'paid_at' => ['required', 'datetime'],
+            'amount' => ['required', 'integer', 'min:0'],
+            'paid_at' => ['required', 'date'],
         ];
     }
 }

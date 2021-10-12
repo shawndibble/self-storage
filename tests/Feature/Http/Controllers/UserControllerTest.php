@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\Assert;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -23,7 +23,7 @@ class UserTest extends TestCase
     /** @test */
     public function non_user_get_routed_to_login(): void
     {
-        $this->get('/users')->assertRedirect('/login');
+        $this->get('/user')->assertRedirect('/login');
     }
 
     /** @test */
@@ -32,27 +32,27 @@ class UserTest extends TestCase
         $user = User::factory()->create();
         $loggedIn = $this->actingAs($user);
 
-        $loggedIn->patch("/users/{$user->id}")->assertStatus(302);
-        $loggedIn->get("/users/{$user->id}")->assertStatus(200);
+        $loggedIn->patch("/user/{$user->id}")->assertStatus(302);
+        $loggedIn->get("/user/{$user->id}")->assertStatus(200);
 
-        $loggedIn->patch("/users/{$this->admin->id}")->assertStatus(403);
-        $loggedIn->get("/users/{$this->admin->id}")->assertStatus(403);
+        $loggedIn->patch("/user/{$this->admin->id}")->assertStatus(403);
+        $loggedIn->get("/user/{$this->admin->id}")->assertStatus(403);
 
-        $loggedIn->get('/users')->assertStatus(403);
-        $loggedIn->get('/users/create')->assertStatus(403);
-        $loggedIn->post('/users')->assertStatus(403);
-        $loggedIn->delete("/users/{$user->id}")->assertStatus(403);
+        $loggedIn->get('/user')->assertStatus(403);
+        $loggedIn->get('/user/create')->assertStatus(403);
+        $loggedIn->post('/user')->assertStatus(403);
+        $loggedIn->delete("/user/{$user->id}")->assertStatus(403);
     }
 
     /** @test */
-    public function can_list_all_users(): void
+    public function can_list_all_user(): void
     {
         User::factory()->count(10)->create();
-        $this->actingAs($this->admin)->get('/users');
+        $this->actingAs($this->admin)->get('/user');
 
-        $this->get('/users')
+        $this->get('/user')
             ->assertInertia(fn(Assert $page) => $page
-                ->component('Users/Index')
+                ->component('User/Index')
                 ->has('users', 11));
     }
 
@@ -61,8 +61,8 @@ class UserTest extends TestCase
     {
         $response = $this
             ->actingAs($this->admin)
-            ->from('/users')
-            ->post('/users', [
+            ->from('/user')
+            ->post('/user', [
                 'name' => 'Sally Gene',
                 'email' => 'sallyjene@gmail.com',
                 'address' => '14321 Example Street',
@@ -73,7 +73,7 @@ class UserTest extends TestCase
                 'phone' => '5126987896'
             ]);
 
-        $response->assertRedirect('users');
+        $response->assertRedirect('user');
         $this->assertDatabaseHas('users', [
             'name' => 'Sally Gene',
             'email' => 'sallyjene@gmail.com',
@@ -91,12 +91,12 @@ class UserTest extends TestCase
     /** @test */
     public function storing_a_user_protects_sensitive_fields(): void
     {
-        $response = $this->actingAs($this->admin)->from('/users')->post('/users', [
+        $response = $this->actingAs($this->admin)->from('/user')->post('/user', [
             'name' => 'Sally Gene',
             'email_verified_at' => now(),
         ]);
 
-        $response->assertRedirect('users')
+        $response->assertRedirect('user')
             ->assertSessionHas('message', 'User Created Successfully.');
 
         $this->assertDatabaseHas('users', [
@@ -108,29 +108,28 @@ class UserTest extends TestCase
     /** @test */
     public function getting_a_use_retrieves_relevant_records(): void
     {
-        $this->actingAs($this->admin)->get('/users');
+        $this->actingAs($this->admin)->get('/user');
 
-        $response = $this->get("/users/{$this->admin->id}");
+        $response = $this->get("/user/{$this->admin->id}");
 
         $response->assertInertia(fn(Assert $page) => $page
-            ->component('Users/Show')
+            ->component('User/Show')
             ->has('user'));
     }
 
     /** @test */
     public function can_update_a_user(): void
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->from('/users')
-            ->put("/users/{$user->id}", [
+            ->from('/user')
+            ->put("/user/{$user->id}", [
                 'name' => 'New Name',
                 'is_admin' => 1
             ]);
 
-        $response->assertRedirect('users')
+        $response->assertRedirect('user')
             ->assertSessionHas('message', 'User Updated Successfully.');
 
         $this->assertDatabaseHas('users', [
@@ -144,10 +143,10 @@ class UserTest extends TestCase
     public function can_delete_a_user(): void
     {
         $response = $this->actingAs($this->admin)
-            ->from('/users')
-            ->delete("/users/{$this->admin->id}");
+            ->from('/user')
+            ->delete("/user/{$this->admin->id}");
 
-        $response->assertRedirect('users')
+        $response->assertRedirect('user')
             ->assertSessionHas('message', 'User Deleted Successfully.');
 
         $this->assertSoftDeleted($this->admin);

@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index(): Response
     {
         $users = User::all();
-        return Inertia::render('Users/Index', compact('users'));
+        return Inertia::render('User/Index', compact('users'));
     }
 
     /**
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('User/Create');
     }
 
     /**
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
-        return Inertia::render('Users/Show', compact('user'));
+        return Inertia::render('User/Show', compact('user'));
     }
 
     /**

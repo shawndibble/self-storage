@@ -5,86 +5,82 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SizeStoreRequest;
 use App\Http\Requests\SizeUpdateRequest;
 use App\Models\Size;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class SizeController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(): Response
     {
         $sizes = Size::all();
-
-        return view('size.index', compact('sizes'));
+        return Inertia::render('Size/Index', compact('sizes'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(): Response
     {
-        return view('size.create');
+        return Inertia::render('Size/Create');
     }
 
     /**
-     * @param \App\Http\Requests\SizeStoreRequest $request
-     * @return \Illuminate\Http\Response
+     * @param SizeStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(SizeStoreRequest $request)
+    public function store(SizeStoreRequest $request): RedirectResponse
     {
         $size = Size::create($request->validated());
 
         $request->session()->flash('size.id', $size->id);
 
-        return redirect()->route('size.index');
+        return back()->with('message', 'Size Created Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Size $size
-     * @return \Illuminate\Http\Response
+     * @param Size $size
+     * @return Response
      */
-    public function show(Request $request, Size $size)
+    public function show(Size $size): Response
     {
-        return view('size.show', compact('size'));
+        return Inertia::render('Size/Show', compact('size'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Size $size
-     * @return \Illuminate\Http\Response
+     * @param Size $size
+     * @return Response
      */
-    public function edit(Request $request, Size $size)
+    public function edit(Size $size): Response
     {
-        return view('size.edit', compact('size'));
+        return Inertia::render('size.edit', compact('size'));
     }
 
     /**
-     * @param \App\Http\Requests\SizeUpdateRequest $request
-     * @param \App\Models\Size $size
-     * @return \Illuminate\Http\Response
+     * @param SizeUpdateRequest $request
+     * @param Size $size
+     * @return RedirectResponse
      */
-    public function update(SizeUpdateRequest $request, Size $size)
+    public function update(SizeUpdateRequest $request, Size $size): RedirectResponse
     {
         $size->update($request->validated());
 
         $request->session()->flash('size.id', $size->id);
 
-        return redirect()->route('size.index');
+        return back()->with('message', 'Size Updated Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Size $size
-     * @return \Illuminate\Http\Response
+     * @param Size $size
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Size $size)
+    public function destroy(Size $size): RedirectResponse
     {
         $size->delete();
 
-        return redirect()->route('size.index');
+        return back()->with('message', 'Size Deleted Successfully.');
     }
 }

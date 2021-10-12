@@ -5,86 +5,73 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InvoiceStoreRequest;
 use App\Http\Requests\InvoiceUpdateRequest;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class InvoiceController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(): Response
     {
         $invoices = Invoice::all();
-
-        return view('invoice.index', compact('invoices'));
+        return Inertia::render('Invoice/Index', compact('invoices'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(): Response
     {
-        return view('invoice.create');
+        return Inertia::render('Invoice/Create');
     }
 
     /**
-     * @param \App\Http\Requests\InvoiceStoreRequest $request
-     * @return \Illuminate\Http\Response
+     * @param InvoiceStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(InvoiceStoreRequest $request)
+    public function store(InvoiceStoreRequest $request): RedirectResponse
     {
         $invoice = Invoice::create($request->validated());
 
         $request->session()->flash('invoice.id', $invoice->id);
 
-        return redirect()->route('invoice.index');
+        return back()->with('message', 'Invoice Created Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @param Invoice $invoice
+     * @return Response
      */
-    public function show(Request $request, Invoice $invoice)
+    public function show(Invoice $invoice): Response
     {
-        return view('invoice.show', compact('invoice'));
+        return Inertia::render('Invoice/Show', compact('invoice'));
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @param InvoiceUpdateRequest $request
+     * @param Invoice $invoice
+     * @return RedirectResponse
      */
-    public function edit(Request $request, Invoice $invoice)
-    {
-        return view('invoice.edit', compact('invoice'));
-    }
-
-    /**
-     * @param \App\Http\Requests\InvoiceUpdateRequest $request
-     * @param \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function update(InvoiceUpdateRequest $request, Invoice $invoice)
+    public function update(InvoiceUpdateRequest $request, Invoice $invoice): RedirectResponse
     {
         $invoice->update($request->validated());
 
         $request->session()->flash('invoice.id', $invoice->id);
 
-        return redirect()->route('invoice.index');
+        return back()->with('message', 'Invoice Updated Successfully.');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Invoice $invoice
-     * @return \Illuminate\Http\Response
+     * @param Invoice $invoice
+     * @return RedirectResponse
      */
-    public function destroy(Request $request, Invoice $invoice)
+    public function destroy(Invoice $invoice): RedirectResponse
     {
         $invoice->delete();
 
-        return redirect()->route('invoice.index');
+        return back()->with('message', 'Invoice Deleted Successfully.');
     }
 }

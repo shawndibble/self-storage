@@ -27,7 +27,7 @@ class PaymentStoreRequest extends FormRequest
             'user_id' => ['required', 'integer', 'exists:users,id'],
             'invoice_id' => ['required', 'integer', 'exists:invoices,id'],
             'amount' => ['required', 'integer'],
-            'paid_at' => ['required'],
+            'paid_at' => ['required', 'date'],
         ];
     }
 }

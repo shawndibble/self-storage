@@ -75,6 +75,10 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
+                    <Link href={route('register')} className="ml-4 mr-4 text-sm text-gray-700 underline">
+                        Register
+                    </Link> |
+
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}

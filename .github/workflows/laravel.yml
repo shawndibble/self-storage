@@ -1,6 +1,6 @@
 name: Tests (PHP)
 
-on: [push]
+on: [ push ]
 
 jobs:
   tests:
@@ -29,10 +29,10 @@ jobs:
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: yarn-${{ hashFiles('yarn.lock') }}
+          key: npm-${{ hashFiles('package-lock.json') }}
 
-      - name: Run yarn
-        run: yarn && yarn dev
+      - name: Run npm
+        run: npm install && npm run dev
 
       - name: Run tests
         run: ./vendor/bin/phpunit

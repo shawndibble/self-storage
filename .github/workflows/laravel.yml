@@ -9,11 +9,16 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
         with:
-          path: vendor
-          key: composer-${{ hashFiles('composer.lock') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
       - name: Run composer install
         run: composer install -n --prefer-dist
@@ -25,11 +30,12 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
-      - name: Cache yarn dependencies
-        uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
-          path: node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Run npm
         run: npm install && npm run dev

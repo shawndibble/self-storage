@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "fruitcake/laravel-cors": "2.0.4",
-        "guzzlehttp/guzzle": "7.3.0",
+        "guzzlehttp/guzzle": "7.4.0",
         "inertiajs/inertia-laravel": "0.4.4",
         "laravel/framework": "8.63.0",
         "laravel/sanctum": "2.11.2",

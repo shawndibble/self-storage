@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "2.10.0",
-        "facade/ignition": "2.14.1",
+        "facade/ignition": "2.15.0",
         "fakerphp/faker": "1.16.0",
         "jasonmccreary/laravel-test-assertions": "2.0.0",
         "laravel-shift/blueprint": "2.0.0",

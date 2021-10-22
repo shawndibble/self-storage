@@ -13,7 +13,7 @@
         "guzzlehttp/guzzle": "7.4.0",
         "inertiajs/inertia-laravel": "0.4.4",
         "laravel/framework": "8.66.0",
-        "laravel/sanctum": "2.11.2",
+        "laravel/sanctum": "2.12.0",
         "laravel/tinker": "2.6.2",
         "psr/log": "1.1.4",
         "tightenco/ziggy": "1.4.2"

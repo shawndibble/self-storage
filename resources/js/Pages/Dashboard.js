@@ -1,10 +1,10 @@
 import React from 'react';
 import { Head } from '@inertiajs/inertia-react';
 
-export default function Dashboard(props) {
+export default function Dashboard({ site }) {
     return (
         <>
-            <Head title="Dashboard" />
+            <Head title={`Dashboard - ${site.name}`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

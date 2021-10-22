@@ -2,13 +2,14 @@ import React from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import { Inertia } from "@inertiajs/inertia";
+import Card from '@mui/material/Card';
+import { Head } from "@inertiajs/inertia-react";
 
-export default function Users(props) {
-    const rows = props.users;
-    const openPage = ({ row }) => {
-        console.log(row);
-        Inertia.visit(`/user/${row?.id}`);
-    }
+const openPage = ({ row }) => {
+    Inertia.visit(`/user/${row?.id}`);
+}
+
+export default function Users({ site, users }) {
     const columns = [
         { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
         { field: 'email', headerName: 'email', type: 'email', flex: 2, minWidth: 250 },
@@ -24,13 +25,19 @@ export default function Users(props) {
     ];
 
     return (
-        <div style={{ height: 'calc(100vh - 160px)', width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={25}
-                checkboxSelection
-            />
-        </div>
+        <>
+            <Head title={`Customers - ${site.name}`} />
+            <Card sx={{ width: '100%' }}>
+                <div style={{ width: '100%' }}>
+                    <DataGrid
+                        autoHeight
+                        rows={users}
+                        columns={columns}
+                        pageSize={25}
+                        checkboxSelection
+                    />
+                </div>
+            </Card>
+        </>
     )
 }

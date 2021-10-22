@@ -15,7 +15,7 @@
         "laravel/framework": "8.66.0",
         "laravel/sanctum": "2.11.2",
         "laravel/tinker": "2.6.2",
-        "psr/log": "1.1.4",
+        "psr/log": "3.0.0",
         "tightenco/ziggy": "1.4.2"
     },
     "require-dev": {

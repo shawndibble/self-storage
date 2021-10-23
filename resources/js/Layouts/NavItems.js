@@ -16,8 +16,9 @@ import Divider from "@mui/material/Divider";
 export default function NavItems() {
     const [path, setPath] = React.useState(window.location.pathname)
 
-    const navigateTo = (url) => Inertia.visit(url, {
-        onFinish: visit => setPath(visit?.url?.pathname)
+    const navigateTo = (url, method = 'GET') => Inertia.visit(url, {
+        onStart: visit => setPath(visit?.url?.pathname),
+        method
     })
 
     return (
@@ -78,7 +79,7 @@ export default function NavItems() {
             <div>
                 <Divider />
                 <List>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => navigateTo('/logout', 'POST')}>
                         <ListItemIcon><LogoutIcon /></ListItemIcon>
                         <ListItemText primary="Logout" />
                     </ListItemButton>
@@ -87,4 +88,4 @@ export default function NavItems() {
 
         </div>
     )
-};
+}

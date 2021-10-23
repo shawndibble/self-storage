@@ -57,7 +57,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
-export default function Authenticated(children) {
+function Layout({ children }) {
     const { auth, site, flash, errors } = children.props;
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
@@ -69,8 +69,7 @@ export default function Authenticated(children) {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <AppBar position="fixed" open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                    <Toolbar
-                    >
+                    <Toolbar>
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -124,4 +123,8 @@ export default function Authenticated(children) {
             </Box>
         </ThemeProvider>
     );
+}
+
+export default function Authenticated(children) {
+    return <Layout children={children} />;
 }

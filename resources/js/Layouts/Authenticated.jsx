@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { PropTypes } from '@mui/material';
+import PropTypes from 'prop-types';
 import NavItems from './NavItems';
 import PageName from './PageName';
 

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies, global-require */
 const mix = require('laravel-mix');
 
 /*

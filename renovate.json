@@ -1,5 +1,5 @@
 {
-  "schedule: [every weekend"],
+  "schedule": ["every weekend"],
   "groupName": "all dependencies",
   "separateMajorMinor": false,
   "groupSlug": "all",

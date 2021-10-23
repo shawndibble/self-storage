@@ -16,7 +16,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.1",
     "@tailwindcss/forms": "0.3.4",
     "autoprefixer": "10.3.7",
-    "eslint": "7.32.0",
+    "eslint": "8.0.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-plugin-import": "2.25.2",
@@ -41,7 +41,7 @@
     "@mui/x-data-grid": "5.0.0-beta.5",
     "axios": "0.23.0",
     "lodash": "4.17.21",
-    "prop-types": "^15.7.2",
+    "prop-types": "15.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   }

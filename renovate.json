@@ -3,19 +3,13 @@
   "groupName": "all dependencies",
   "separateMajorMinor": false,
   "groupSlug": "all",
-  "packageRules": [
-    {
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "groupName": "all dependencies",
-      "groupSlug": "all"
-    }
-  ],
+  "packageRules": [{
+    "matchPackagePatterns": ["*"],
+    "groupName": "all dependencies",
+    "groupSlug": "all"
+  }],
   "lockFileMaintenance": {
     "enabled": false
-  }
-  "extends": [
-    "config:base"
-  ]
+  },
+  "extends": ["config:base"]
 }

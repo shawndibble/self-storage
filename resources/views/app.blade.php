@@ -9,12 +9,12 @@
 
     <!-- Fonts -->
     <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
     />
     <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
 
     <!-- Styles -->
@@ -22,7 +22,7 @@
 
     <!-- Scripts -->
     @routes
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.jsx') }}" defer></script>
 </head>
 <body class="font-sans antialiased">
 @inertia

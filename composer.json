@@ -28,7 +28,8 @@
         "laravel/sail": "1.12.0",
         "mockery/mockery": "1.4.4",
         "nunomaduro/collision": "5.10.0",
-        "phpunit/phpunit": "9.5.10"
+        "phpunit/phpunit": "9.5.10",
+        "wulfheart/pretty_routes": "^0.3.0"
     },
     "autoload": {
         "psr-4": {

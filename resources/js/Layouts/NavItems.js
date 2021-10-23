@@ -17,7 +17,7 @@ export default function NavItems() {
     const [path, setPath] = React.useState(window.location.pathname)
 
     const navigateTo = (url, method = 'GET') => Inertia.visit(url, {
-        onStart: visit => setPath(visit?.url?.pathname),
+        onStart: (visit) => setPath(visit?.url?.pathname),
         method
     })
 

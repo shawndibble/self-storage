@@ -11,14 +11,14 @@ import { Inertia } from '@inertiajs/inertia';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
+import PropTypes from 'prop-types';
 
-export default function NavItems() {
+export default function NavItems({ page }) {
   const [path, setPath] = React.useState(window.location.pathname);
 
-  const navigateTo = (url, method = 'GET') => Inertia.visit(url, {
-    onStart: (visit) => setPath(visit?.url?.pathname),
-    method,
-  });
+  const navigateTo = (url, method = 'GET') => Inertia.visit(url, { method });
+
+  React.useMemo(() => setPath(window.location.pathname), [page]);
 
   return (
     <div style={{
@@ -31,7 +31,7 @@ export default function NavItems() {
       <List>
         <ListItemButton
           onClick={() => navigateTo('/dashboard')}
-          selected={path === '/dashboard'}
+          selected={path.includes('/dashboard')}
         >
           <ListItemIcon>
             <DashboardIcon />
@@ -40,7 +40,7 @@ export default function NavItems() {
         </ListItemButton>
         <ListItemButton
           onClick={() => navigateTo('/payment')}
-          selected={path === '/payment'}
+          selected={path.includes('/payment')}
         >
           <ListItemIcon>
             <PaymentsIcon />
@@ -49,7 +49,7 @@ export default function NavItems() {
         </ListItemButton>
         <ListItemButton
           onClick={() => navigateTo('/user')}
-          selected={path === '/user'}
+          selected={path.includes('/user')}
         >
           <ListItemIcon>
             <PeopleIcon />
@@ -58,7 +58,7 @@ export default function NavItems() {
         </ListItemButton>
         <ListItemButton
           onClick={() => navigateTo('/storage-unit')}
-          selected={path === '/storage-unit'}
+          selected={path.includes('/storage-unit')}
         >
           <ListItemIcon>
             <DomainIcon />
@@ -67,7 +67,7 @@ export default function NavItems() {
         </ListItemButton>
         <ListItemButton
           onClick={() => navigateTo('/settings')}
-          selected={path === '/settings'}
+          selected={path.includes('/settings')}
         >
           <ListItemIcon>
             <SettingsIcon />
@@ -89,3 +89,7 @@ export default function NavItems() {
     </div>
   );
 }
+
+NavItems.propTypes = {
+  page: PropTypes.string.isRequired,
+};

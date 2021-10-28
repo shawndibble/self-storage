@@ -24,10 +24,10 @@ class StorageUnitUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
-            'size_id' => ['required', 'integer', 'exists:sizes,id'],
+            'name' => ['sometimes', 'required', 'string'],
+            'size_id' => ['sometimes', 'required', 'integer', 'exists:sizes,id'],
             'user_id' => ['integer', 'exists:users,id'],
-            'is_locked' => ['required', 'integer'],
+            'is_locked' => ['sometimes', 'required', 'integer'],
             'notes' => ['string'],
         ];
     }

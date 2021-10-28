@@ -10,7 +10,7 @@ const openPage = ({ row }) => {
   Inertia.visit(`/user/${row?.id}`);
 };
 
-export default function Users({ site, users }) {
+export default function Users({ users }) {
   const columns = [
     {
       field: 'name', headerName: 'Name', flex: 1, minWidth: 150,
@@ -35,7 +35,7 @@ export default function Users({ site, users }) {
 
   return (
     <>
-      <Head title={`Customers - ${site.name}`} />
+      <Head title="Customers" />
       <Card sx={{ width: '100%' }}>
         <div style={{ width: '100%' }}>
           <DataGrid
@@ -43,7 +43,6 @@ export default function Users({ site, users }) {
             rows={users}
             columns={columns}
             pageSize={25}
-            checkboxSelection
           />
         </div>
       </Card>
@@ -52,8 +51,5 @@ export default function Users({ site, users }) {
 }
 
 Users.propTypes = {
-  site: PropTypes.shape({
-    name: PropTypes.string,
-  }).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

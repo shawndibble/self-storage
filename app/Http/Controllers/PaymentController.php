@@ -16,8 +16,12 @@ class PaymentController extends Controller
      */
     public function index(): Response
     {
-        $payments = Payment::all();
-        return Inertia::render('Payments/Index', compact('payments'));
+        $payments = Payment::with('user:id,name')
+            ->select('id', 'amount', 'paid_at', 'user_id')
+            ->orderBy('paid_at', 'desc')
+            ->get();
+
+        return Inertia::render('Payment/Index', compact('payments'));
     }
 
     /**
@@ -25,7 +29,7 @@ class PaymentController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Payments/Create');
+        return Inertia::render('Payment/Create');
     }
 
     /**
@@ -47,7 +51,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment): Response
     {
-        return Inertia::render('Payments/Show', compact('payment'));
+        return Inertia::render('Payment/Show', compact('payment'));
     }
 
     /**

@@ -22,8 +22,8 @@ class SizeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'rate' => $this->faker->numberBetween(1, 10000),
+            'name' => $this->faker->unique()->randomElement(['10x10', '10x15', '10x20', '20x20']),
+            'rate' => $this->faker->numberBetween(1000, 10000),
         ];
     }
 }

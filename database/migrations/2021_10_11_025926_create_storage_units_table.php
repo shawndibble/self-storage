@@ -17,7 +17,7 @@ class CreateStorageUnitsTable extends Migration
 
         Schema::create('storage_units', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->foreignId('size_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->tinyInteger('is_locked')->default(0);

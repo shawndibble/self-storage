@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\StorageUnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,10 +24,10 @@ Route::redirect('/', '/dashboard');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
     Route::resource('user', UserController::class)->except(['edit']);
-    Route::resource('size', App\Http\Controllers\SizeController::class)->except(['edit']);
-    Route::resource('storage-unit', App\Http\Controllers\StorageUnitController::class)->except(['edit']);
-    Route::resource('invoice', App\Http\Controllers\InvoiceController::class)->except(['edit']);
-    Route::resource('payment', App\Http\Controllers\PaymentController::class)->except(['edit']);
+    Route::resource('size', SizeController::class)->except(['edit']);
+    Route::resource('storage-unit', StorageUnitController::class)->except(['edit']);
+    Route::resource('invoice', InvoiceController::class)->except(['edit']);
+    Route::resource('payment', PaymentController::class)->except(['edit']);
 });
 
 require __DIR__ . '/auth.php';

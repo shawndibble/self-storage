@@ -5,31 +5,22 @@ import { Inertia } from '@inertiajs/inertia';
 import Card from '@mui/material/Card';
 import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
-import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
-import Lock from '@mui/icons-material/Lock';
-import LockOpen from '@mui/icons-material/LockOpen';
-import { useSnackbar } from 'notistack';
+import { Tooltip } from '@mui/material';
 
-const openPage = ({ row }) => Inertia.visit(`/storage-unit/${row?.id}`);
+const openPage = ({ row }) => Inertia.visit(`/payment/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/user/${userId}`);
+const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+const currencyFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
 
-export default function StorageUnits({ storageUnits }) {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const toggleLock = ({ row }) => Inertia.patch(`/storage-unit/${row?.id}`, {
-    is_locked: row.is_locked ? 0 : 1,
-  }, {
-    onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),
-  });
-
+export default function Payments({ payments }) {
   const columns = [
     {
-      field: 'name', headerName: 'Unit', flex: 0, minWidth: 50,
-    },
-    {
-      field: 'size', headerName: 'Size', flex: 0, minWidth: 100, valueFormatter: (params) => params.value.name,
+      field: 'id', headerName: 'ID', type: 'number', flex: 0, minWidth: 50,
     },
     {
       field: 'user',
@@ -56,30 +47,39 @@ export default function StorageUnits({ storageUnits }) {
       ),
     },
     {
-      field: 'is_locked',
-      headerName: 'Locked',
-      type: 'boolean',
-      flex: 0,
-      renderCell: (params) => (params.value ? <Lock color="error" /> : <LockOpen color="disabled" />),
+      field: 'amount',
+      headerName: 'Amount',
+      type: 'number',
+      flex: 1,
+      minWidth: 100,
+      valueFormatter: (params) => currencyFormat.format(params.value / 100),
+      valueParser: (value) => Number(value) * 100,
+    },
+    {
+      field: 'paid_at',
+      headerName: 'Payment Date',
+      type: 'dateTime',
+      flex: 2,
+      minWidth: 170,
+      valueFormatter: (params) => dateFormat.format(new Date(params.value)),
     },
     {
       field: 'actions',
       type: 'actions',
       getActions: (params) => [
         <GridActionsCellItem icon={<OpenInBrowserIcon />} onClick={() => openPage(params)} label="Open" />,
-        <GridActionsCellItem icon={<Lock />} onClick={() => toggleLock(params)} label="Toggle Lock" showInMenu />,
       ],
     },
   ];
 
   return (
     <>
-      <Head title="Storage Units" />
+      <Head title="Payments" />
       <Card sx={{ width: '100%' }}>
         <div style={{ width: '100%' }}>
           <DataGrid
             autoHeight
-            rows={storageUnits}
+            rows={payments}
             columns={columns}
             pageSize={25}
           />
@@ -89,6 +89,6 @@ export default function StorageUnits({ storageUnits }) {
   );
 }
 
-StorageUnits.propTypes = {
-  storageUnits: PropTypes.arrayOf(PropTypes.object).isRequired,
+Payments.propTypes = {
+  payments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

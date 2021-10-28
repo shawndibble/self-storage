@@ -14,6 +14,6 @@ class StorageUnitSeeder extends Seeder
      */
     public function run()
     {
-        StorageUnit::factory()->count(5)->create();
+        StorageUnit::factory()->count(15)->create();
     }
 }

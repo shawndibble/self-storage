@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Size;
 use App\Models\StorageUnit;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StorageUnitFactory extends Factory
 {
+    private static int $order = 1;
     /**
      * The name of the factory's corresponding model.
      *
@@ -25,10 +25,10 @@ class StorageUnitFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => self::$order++,
             'size_id' => Size::factory(),
             'user_id' => User::factory(),
-            'is_locked' => $this->faker->numberBetween(-8, 8),
+            'is_locked' => $this->faker->boolean(20),
             'notes' => $this->faker->text,
         ];
     }

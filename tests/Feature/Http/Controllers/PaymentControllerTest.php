@@ -40,7 +40,7 @@ class PaymentControllerTest extends TestCase
             ->get(route('payment.index'));
 
         $response->assertInertia(fn(Assert $page) => $page
-            ->component('Payments/Index')
+            ->component('Payment/Index')
             ->has('payments', 3));
     }
 
@@ -52,7 +52,7 @@ class PaymentControllerTest extends TestCase
             ->get(route('payment.create'));
 
         $response->assertInertia(fn(Assert $page) => $page
-            ->component('Payments/Create'));
+            ->component('Payment/Create'));
     }
 
 
@@ -106,7 +106,7 @@ class PaymentControllerTest extends TestCase
             ->get(route('payment.show', $payment));
 
         $response->assertInertia(fn(Assert $page) => $page
-            ->component('Payments/Show')
+            ->component('Payment/Show')
             ->has('payment'));
     }
 

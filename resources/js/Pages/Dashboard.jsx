@@ -1,11 +1,10 @@
 import React from 'react';
 import { Head } from '@inertiajs/inertia-react';
-import PropType from 'prop-types';
 
-export default function Dashboard({ site }) {
+export default function Dashboard() {
   return (
     <>
-      <Head title={`Dashboard - ${site.name}`} />
+      <Head title="Dashboard" />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -17,9 +16,3 @@ export default function Dashboard({ site }) {
     </>
   );
 }
-
-Dashboard.propTypes = {
-  site: PropType.shape({
-    name: PropType.string,
-  }).isRequired,
-};

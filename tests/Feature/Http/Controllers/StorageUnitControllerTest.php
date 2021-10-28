@@ -136,7 +136,7 @@ class StorageUnitControllerTest extends TestCase
         $storageUnit->refresh();
 
         $response->assertRedirect(route('storage-unit.index'))
-            ->assertSessionHas('message', 'Unit Updated Successfully.')
+            ->assertSessionHas('message', "Unit {$storageUnit->name} Updated Successfully.")
             ->assertSessionHas('storageUnit.id', $storageUnit->id);
 
         $this->assertEquals($name, $storageUnit->name);

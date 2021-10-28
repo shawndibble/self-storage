@@ -16,7 +16,7 @@ class StorageUnitController extends Controller
      */
     public function index(): Response
     {
-        $storageUnits = StorageUnit::all();
+        $storageUnits = StorageUnit::with('size', 'user:id,name')->get();
 
         return Inertia::render('StorageUnit/Index', compact('storageUnits'));
     }
@@ -62,7 +62,7 @@ class StorageUnitController extends Controller
 
         $request->session()->flash('storageUnit.id', $storageUnit->id);
 
-        return back()->with('message', 'Unit Updated Successfully.');
+        return back()->with('message', "Unit {$storageUnit->name} Updated Successfully.");
     }
 
     /**

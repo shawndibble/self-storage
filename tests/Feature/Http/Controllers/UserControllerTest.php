@@ -23,7 +23,7 @@ class UserControllerTest extends TestCase
     /** @test */
     public function non_user_get_routed_to_login(): void
     {
-        $this->get('/user')->assertRedirect('/login');
+        $this->get('/users')->assertRedirect('/login');
     }
 
     /** @test */
@@ -32,25 +32,25 @@ class UserControllerTest extends TestCase
         $user = User::factory()->create();
         $loggedIn = $this->actingAs($user);
 
-        $loggedIn->patch("/user/{$user->id}")->assertStatus(302);
-        $loggedIn->get("/user/{$user->id}")->assertStatus(200);
+        $loggedIn->patch("/users/{$user->id}")->assertStatus(302);
+        $loggedIn->get("/users/{$user->id}")->assertStatus(200);
 
-        $loggedIn->patch("/user/{$this->admin->id}")->assertStatus(403);
-        $loggedIn->get("/user/{$this->admin->id}")->assertStatus(403);
+        $loggedIn->patch("/users/{$this->admin->id}")->assertStatus(403);
+        $loggedIn->get("/users/{$this->admin->id}")->assertStatus(403);
 
-        $loggedIn->get('/user')->assertStatus(403);
-        $loggedIn->get('/user/create')->assertStatus(403);
-        $loggedIn->post('/user')->assertStatus(403);
-        $loggedIn->delete("/user/{$user->id}")->assertStatus(403);
+        $loggedIn->get('/users')->assertStatus(403);
+        $loggedIn->get('/users/create')->assertStatus(403);
+        $loggedIn->post('/users')->assertStatus(403);
+        $loggedIn->delete("/users/{$user->id}")->assertStatus(403);
     }
 
     /** @test */
     public function can_list_all_user(): void
     {
         User::factory()->count(10)->create();
-        $this->actingAs($this->admin)->get('/user');
+        $this->actingAs($this->admin)->get('/users');
 
-        $this->get('/user')
+        $this->get('/users')
             ->assertInertia(fn(Assert $page) => $page
                 ->component('User/Index')
                 ->has('users', 11));
@@ -61,8 +61,8 @@ class UserControllerTest extends TestCase
     {
         $response = $this
             ->actingAs($this->admin)
-            ->from('/user')
-            ->post('/user', [
+            ->from('/users')
+            ->post('/users', [
                 'name' => 'Sally Gene',
                 'email' => 'sallyjene@gmail.com',
                 'address' => '14321 Example Street',
@@ -73,7 +73,7 @@ class UserControllerTest extends TestCase
                 'phone' => '5126987896'
             ]);
 
-        $response->assertRedirect('user');
+        $response->assertRedirect('users');
         $this->assertDatabaseHas('users', [
             'name' => 'Sally Gene',
             'email' => 'sallyjene@gmail.com',
@@ -91,12 +91,12 @@ class UserControllerTest extends TestCase
     /** @test */
     public function storing_a_user_protects_sensitive_fields(): void
     {
-        $response = $this->actingAs($this->admin)->from('/user')->post('/user', [
+        $response = $this->actingAs($this->admin)->from('/users')->post('/users', [
             'name' => 'Sally Gene',
             'email_verified_at' => now(),
         ]);
 
-        $response->assertRedirect('user')
+        $response->assertRedirect('users')
             ->assertSessionHas('message', 'User Created Successfully.');
 
         $this->assertDatabaseHas('users', [
@@ -106,11 +106,11 @@ class UserControllerTest extends TestCase
     }
 
     /** @test */
-    public function getting_a_use_retrieves_relevant_records(): void
+    public function getting_a_user_retrieves_relevant_records(): void
     {
-        $this->actingAs($this->admin)->get('/user');
+        $this->actingAs($this->admin)->get('/users');
 
-        $response = $this->get("/user/{$this->admin->id}");
+        $response = $this->get("/users/{$this->admin->id}");
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('User/Show')
@@ -123,13 +123,13 @@ class UserControllerTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->from('/user')
-            ->put("/user/{$user->id}", [
+            ->from('/users')
+            ->put("/users/{$user->id}", [
                 'name' => 'New Name',
                 'is_admin' => 1
             ]);
 
-        $response->assertRedirect('user')
+        $response->assertRedirect('users')
             ->assertSessionHas('message', 'User Updated Successfully.');
 
         $this->assertDatabaseHas('users', [
@@ -143,10 +143,10 @@ class UserControllerTest extends TestCase
     public function can_delete_a_user(): void
     {
         $response = $this->actingAs($this->admin)
-            ->from('/user')
-            ->delete("/user/{$this->admin->id}");
+            ->from('/users')
+            ->delete("/users/{$this->admin->id}");
 
-        $response->assertRedirect('user')
+        $response->assertRedirect('users')
             ->assertSessionHas('message', 'User Deleted Successfully.');
 
         $this->assertSoftDeleted($this->admin);

@@ -39,8 +39,8 @@ export default function NavItems({ page }) {
           <ListItemText primary="Dashboard" />
         </ListItemButton>
         <ListItemButton
-          onClick={() => navigateTo('/payment')}
-          selected={path.includes('/payment')}
+          onClick={() => navigateTo('/payments')}
+          selected={path.includes('/payments')}
         >
           <ListItemIcon>
             <PaymentsIcon />
@@ -48,8 +48,8 @@ export default function NavItems({ page }) {
           <ListItemText primary="Payments" />
         </ListItemButton>
         <ListItemButton
-          onClick={() => navigateTo('/user')}
-          selected={path.includes('/user')}
+          onClick={() => navigateTo('/users')}
+          selected={path.includes('/users')}
         >
           <ListItemIcon>
             <PeopleIcon />
@@ -57,8 +57,8 @@ export default function NavItems({ page }) {
           <ListItemText primary="Customers" />
         </ListItemButton>
         <ListItemButton
-          onClick={() => navigateTo('/storage-unit')}
-          selected={path.includes('/storage-unit')}
+          onClick={() => navigateTo('/storage-units')}
+          selected={path.includes('/storage-units')}
         >
           <ListItemIcon>
             <DomainIcon />

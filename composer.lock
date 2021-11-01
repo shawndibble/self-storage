@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64d00a2ecb161a8a4ed238e0d263e28d",
+    "content-hash": "b9ec652ecbd5819f66028ddf829b6038",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2522,30 +2522,30 @@
         },
         {
             "name": "psr/log",
-            "version": "2.0.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376"
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/ef29f6d262798707a9edd554e2b82517ef3a9376",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "src"
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2566,9 +2566,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/2.0.0"
+                "source": "https://github.com/php-fig/log/tree/1.1.4"
             },
-            "time": "2021-07-14T16:41:46+00:00"
+            "time": "2021-05-03T11:20:27+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -5579,6 +5579,91 @@
     ],
     "packages-dev": [
         {
+            "name": "barryvdh/laravel-debugbar",
+            "version": "v3.6.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-debugbar.git",
+                "reference": "3c2d678269ba60e178bcd93e36f6a91c36b727f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/3c2d678269ba60e178bcd93e36f6a91c36b727f1",
+                "reference": "3c2d678269ba60e178bcd93e36f6a91c36b727f1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "^6|^7|^8",
+                "illuminate/session": "^6|^7|^8",
+                "illuminate/support": "^6|^7|^8",
+                "maximebf/debugbar": "^1.17.2",
+                "php": ">=7.2",
+                "symfony/debug": "^4.3|^5",
+                "symfony/finder": "^4.3|^5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-dusk": "^4|^5|^6",
+                "phpunit/phpunit": "^8.5|^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Debugbar\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Debugbar": "Barryvdh\\Debugbar\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\Debugbar\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "PHP Debugbar integration for Laravel",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "laravel",
+                "profiler",
+                "webprofiler"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.6.4"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-10-21T10:57:31+00:00"
+        },
+        {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.10.0",
             "source": {
@@ -5722,16 +5807,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.2.11",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582"
+                "reference": "4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
-                "reference": "0b072d51c5a9c6f3412f7ea3ab043d6603cb2582",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b",
+                "reference": "4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b",
                 "shasum": ""
             },
             "require": {
@@ -5778,7 +5863,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.2.11"
+                "source": "https://github.com/composer/ca-bundle/tree/1.3.1"
             },
             "funding": [
                 {
@@ -5794,20 +5879,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-25T20:32:43+00:00"
+            "time": "2021-10-28T20:44:15+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "dev-main",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "b99e21259c09a6da2614f286b7ad548fec8036a0"
+                "reference": "ea5f64d1a15c66942979b804c9fb3686be852ca0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/b99e21259c09a6da2614f286b7ad548fec8036a0",
-                "reference": "b99e21259c09a6da2614f286b7ad548fec8036a0",
+                "url": "https://api.github.com/repos/composer/composer/zipball/ea5f64d1a15c66942979b804c9fb3686be852ca0",
+                "reference": "ea5f64d1a15c66942979b804c9fb3686be852ca0",
                 "shasum": ""
             },
             "require": {
@@ -5836,7 +5921,6 @@
                 "ext-zip": "Enabling the zip extension allows you to unzip archives",
                 "ext-zlib": "Allow gzip compression of HTTP requests"
             },
-            "default-branch": true,
             "bin": [
                 "bin/composer"
             ],
@@ -5877,7 +5961,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/main"
+                "source": "https://github.com/composer/composer/tree/2.1.10"
             },
             "funding": [
                 {
@@ -5893,7 +5977,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-20T20:20:33+00:00"
+            "time": "2021-10-29T20:34:57+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -6039,16 +6123,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.5",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9"
+                "reference": "83e511e247de329283478496f7a1e114c9517506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/31f3ea725711245195f62e54ffa402d8ef2fdba9",
-                "reference": "31f3ea725711245195f62e54ffa402d8ef2fdba9",
+                "url": "https://api.github.com/repos/composer/semver/zipball/83e511e247de329283478496f7a1e114c9517506",
+                "reference": "83e511e247de329283478496f7a1e114c9517506",
                 "shasum": ""
             },
             "require": {
@@ -6100,7 +6184,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.2.5"
+                "source": "https://github.com/composer/semver/tree/3.2.6"
             },
             "funding": [
                 {
@@ -6116,7 +6200,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-24T12:41:47+00:00"
+            "time": "2021-10-25T11:34:17+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -7393,6 +7477,71 @@
             "time": "2021-10-26T21:37:54+00:00"
         },
         {
+            "name": "maximebf/debugbar",
+            "version": "v1.17.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "e8ac3499af0ea5b440908e06cc0abe5898008b3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e8ac3499af0ea5b440908e06cc0abe5898008b3c",
+                "reference": "e8ac3499af0ea5b440908e06cc0abe5898008b3c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8",
+                "psr/log": "^1|^2|^3",
+                "symfony/var-dumper": "^2.6|^3|^4|^5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5.20 || ^9.4.2"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.17-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "support": {
+                "issues": "https://github.com/maximebf/php-debugbar/issues",
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.17.3"
+            },
+            "time": "2021-10-19T12:33:27+00:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "1.4.4",
             "source": {
@@ -7949,23 +8098,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.7",
+            "version": "9.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218"
+                "reference": "cf04e88a2e3c56fc1a65488afd493325b4c1bc3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d4c798ed8d51506800b441f7a13ecb0f76f12218",
-                "reference": "d4c798ed8d51506800b441f7a13ecb0f76f12218",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/cf04e88a2e3c56fc1a65488afd493325b4c1bc3e",
+                "reference": "cf04e88a2e3c56fc1a65488afd493325b4c1bc3e",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.12.0",
+                "nikic/php-parser": "^4.13.0",
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
@@ -8014,7 +8163,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.7"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.8"
             },
             "funding": [
                 {
@@ -8022,7 +8171,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-17T05:39:03+00:00"
+            "time": "2021-10-30T08:01:38+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -9552,6 +9701,74 @@
                 }
             ],
             "time": "2021-09-21T13:06:51+00:00"
+        },
+        {
+            "name": "symfony/debug",
+            "version": "v4.4.31",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/debug.git",
+                "reference": "43ede438d4cb52cd589ae5dc070e9323866ba8e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/43ede438d4cb52cd589ae5dc070e9323866ba8e0",
+                "reference": "43ede438d4cb52cd589ae5dc070e9323866ba8e0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "psr/log": "^1|^2|^3"
+            },
+            "conflict": {
+                "symfony/http-kernel": "<3.4"
+            },
+            "require-dev": {
+                "symfony/http-kernel": "^3.4|^4.0|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Debug\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides tools to ease debugging PHP code",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/debug/tree/v4.4.31"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-09-24T13:30:14+00:00"
         },
         {
             "name": "symfony/filesystem",

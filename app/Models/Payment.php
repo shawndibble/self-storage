@@ -16,7 +16,6 @@ class Payment extends Model
      */
     protected $fillable = [
         'user_id',
-        'invoice_id',
         'amount',
         'paid_at',
     ];
@@ -29,7 +28,6 @@ class Payment extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'invoice_id' => 'integer',
         'amount' => 'integer',
         'paid_at' => 'datetime',
     ];
@@ -37,10 +35,5 @@ class Payment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function invoice()
-    {
-        return $this->belongsTo(Invoice::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\Payment;
 use App\Models\Size;
 use App\Models\StorageUnit;
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)
             ->has(Payment::factory()->count(10))
+            ->has(Invoice::factory()->count(3)
+                ->has(InvoiceItem::factory()->count(2), 'items'))
             ->has(StorageUnit::factory()
                 ->state(fn() => ['size_id' => random_int(1, 3)]))
             ->create();

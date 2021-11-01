@@ -36,7 +36,7 @@ class StorageUnitControllerTest extends TestCase
     {
         StorageUnit::factory()->count(3)->create();
 
-        $response = $this->actingAs($this->admin)->get(route('storage-unit.index'));
+        $response = $this->actingAs($this->admin)->get(route('storage-units.index'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('StorageUnit/Index')
@@ -48,7 +48,7 @@ class StorageUnitControllerTest extends TestCase
     public function create_displays_view()
     {
         $response = $this->actingAs($this->admin)
-            ->get(route('storage-unit.create'));
+            ->get(route('storage-units.create'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('StorageUnit/Create'));
@@ -73,8 +73,8 @@ class StorageUnitControllerTest extends TestCase
         $is_locked = $this->faker->numberBetween(-8, 8);
 
         $response = $this->actingAs($this->admin)
-            ->from('/storage-unit')
-            ->post(route('storage-unit.store'), [
+            ->from('/storage-units')
+            ->post(route('storage-units.store'), [
                 'name' => $name,
                 'size_id' => $size->id,
                 'is_locked' => $is_locked,
@@ -88,7 +88,7 @@ class StorageUnitControllerTest extends TestCase
         $this->assertCount(1, $storageUnits);
         $storageUnit = $storageUnits->first();
 
-        $response->assertRedirect(route('storage-unit.index'))
+        $response->assertRedirect(route('storage-units.index'))
             ->assertSessionHas('message', 'Unit Created Successfully.')
             ->assertSessionHas('storageUnit.id', $storageUnit->id);
     }
@@ -100,7 +100,7 @@ class StorageUnitControllerTest extends TestCase
         $storageUnit = StorageUnit::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->get(route('storage-unit.show', $storageUnit));
+            ->get(route('storage-units.show', $storageUnit));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('StorageUnit/Show')
@@ -126,8 +126,8 @@ class StorageUnitControllerTest extends TestCase
         $is_locked = $this->faker->numberBetween(-8, 8);
 
         $response = $this->actingAs($this->admin)
-            ->from('/storage-unit')
-            ->put(route('storage-unit.update', $storageUnit), [
+            ->from('/storage-units')
+            ->put(route('storage-units.update', $storageUnit), [
                 'name' => $name,
                 'size_id' => $size->id,
                 'is_locked' => $is_locked,
@@ -135,7 +135,7 @@ class StorageUnitControllerTest extends TestCase
 
         $storageUnit->refresh();
 
-        $response->assertRedirect(route('storage-unit.index'))
+        $response->assertRedirect(route('storage-units.index'))
             ->assertSessionHas('message', "Unit {$storageUnit->name} Updated Successfully.")
             ->assertSessionHas('storageUnit.id', $storageUnit->id);
 
@@ -151,10 +151,10 @@ class StorageUnitControllerTest extends TestCase
         $storageUnit = StorageUnit::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->from('storage-unit')
-            ->delete(route('storage-unit.destroy', $storageUnit));
+            ->from('storage-units')
+            ->delete(route('storage-units.destroy', $storageUnit));
 
-        $response->assertRedirect(route('storage-unit.index'))
+        $response->assertRedirect(route('storage-units.index'))
             ->assertSessionHas('message', 'Unit Deleted Successfully.');
 
         $this->assertDeleted($storageUnit);

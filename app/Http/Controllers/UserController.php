@@ -53,7 +53,9 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
-        return Inertia::render('User/Show', compact('user'));
+        return Inertia::render('User/Show', [
+            'user' => $user->load('payments', 'invoices.items'),
+        ]);
     }
 
     /**

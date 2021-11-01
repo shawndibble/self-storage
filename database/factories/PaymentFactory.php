@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,7 +24,6 @@ class PaymentFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'invoice_id' => Invoice::factory(),
             'amount' => $this->faker->numberBetween(0, 10000),
             'paid_at' => $this->faker->dateTime(),
         ];

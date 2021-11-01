@@ -36,7 +36,7 @@ class InvoiceControllerTest extends TestCase
         Invoice::factory()->count(3)->create();
 
         $response = $this->actingAs($this->admin)
-            ->get(route('invoice.index'));
+            ->get(route('invoices.index'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Invoice/Index')
@@ -48,7 +48,7 @@ class InvoiceControllerTest extends TestCase
     public function create_displays_view()
     {
         $response = $this->actingAs($this->admin)
-            ->get(route('invoice.create'));
+            ->get(route('invoices.create'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Invoice/Create'));
@@ -72,8 +72,8 @@ class InvoiceControllerTest extends TestCase
         $total = $this->faker->numberBetween(1, 10000);
 
         $response = $this->actingAs($this->admin)
-            ->from('/invoice')
-            ->post(route('invoice.store'), [
+            ->from('/invoices')
+            ->post(route('invoices.store'), [
                 'user_id' => $user->id,
                 'total' => $total,
             ]);
@@ -85,7 +85,7 @@ class InvoiceControllerTest extends TestCase
         $this->assertCount(1, $invoices);
         $invoice = $invoices->first();
 
-        $response->assertRedirect('invoice')
+        $response->assertRedirect('invoices')
             ->assertSessionHas('message', 'Invoice Created Successfully.')
             ->assertSessionHas('invoice.id', $invoice->id);
     }
@@ -97,7 +97,7 @@ class InvoiceControllerTest extends TestCase
         $invoice = Invoice::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->get(route('invoice.show', $invoice));
+            ->get(route('invoices.show', $invoice));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Invoice/Show')
@@ -122,15 +122,15 @@ class InvoiceControllerTest extends TestCase
         $total = $this->faker->numberBetween(1, 10000);
 
         $response = $this->actingAs($this->admin)
-            ->from('/invoice')
-            ->put(route('invoice.update', $invoice), [
+            ->from('/invoices')
+            ->put(route('invoices.update', $invoice), [
                 'user_id' => $user->id,
                 'total' => $total,
             ]);
 
         $invoice->refresh();
 
-        $response->assertRedirect('invoice')
+        $response->assertRedirect('invoices')
             ->assertSessionHas('message', 'Invoice Updated Successfully.')
             ->assertSessionHas('invoice.id', $invoice->id);
 
@@ -145,10 +145,10 @@ class InvoiceControllerTest extends TestCase
         $invoice = Invoice::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->from('/invoice')
-            ->delete(route('invoice.destroy', $invoice));
+            ->from('/invoices')
+            ->delete(route('invoices.destroy', $invoice));
 
-        $response->assertRedirect('invoice')
+        $response->assertRedirect('invoices')
             ->assertSessionHas('message', 'Invoice Deleted Successfully.');
 
         $this->assertDeleted($invoice);

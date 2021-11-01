@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
                 'url' => config('app.url'),
             ],
             'auth' => [
-                'user' => $request->user(),
+                'user' => collect(auth()->user())->only(['id', 'name', 'email', 'is_admin']),
             ],
             'flash' => [
                 'message' => fn() => $request->session()->get('message')

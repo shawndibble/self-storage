@@ -36,7 +36,7 @@ class SizeControllerTest extends TestCase
         Size::factory()->count(3)->create();
 
         $response = $this->actingAs($this->admin)
-            ->get(route('size.index'));
+            ->get(route('sizes.index'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Size/Index')
@@ -48,7 +48,7 @@ class SizeControllerTest extends TestCase
     public function create_displays_view()
     {
         $response = $this->actingAs($this->admin)
-            ->get(route('size.create'));
+            ->get(route('sizes.create'));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Size/Create'));
@@ -72,8 +72,8 @@ class SizeControllerTest extends TestCase
         $rate = $this->faker->numberBetween(0, 10000);
 
         $response = $this->actingAs($this->admin)
-            ->from('/size')
-            ->post(route('size.store'), [
+            ->from('/sizes')
+            ->post(route('sizes.store'), [
                 'name' => $name,
                 'rate' => $rate,
             ]);
@@ -85,7 +85,7 @@ class SizeControllerTest extends TestCase
         $this->assertCount(1, $sizes);
         $size = $sizes->first();
 
-        $response->assertRedirect(route('size.index'))
+        $response->assertRedirect(route('sizes.index'))
             ->assertSessionHas('message', 'Size Created Successfully.')
             ->assertSessionHas('size.id', $size->id);
     }
@@ -97,7 +97,7 @@ class SizeControllerTest extends TestCase
         $size = Size::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->get(route('size.show', $size));
+            ->get(route('sizes.show', $size));
 
         $response->assertInertia(fn(Assert $page) => $page
             ->component('Size/Show')
@@ -122,15 +122,15 @@ class SizeControllerTest extends TestCase
         $rate = $this->faker->numberBetween(1, 10000);
 
         $response = $this->actingAs($this->admin)
-            ->from('/size')
-            ->put(route('size.update', $size), [
+            ->from('/sizes')
+            ->put(route('sizes.update', $size), [
                 'name' => $name,
                 'rate' => $rate,
             ]);
 
         $size->refresh();
 
-        $response->assertRedirect(route('size.index'))
+        $response->assertRedirect(route('sizes.index'))
             ->assertSessionHas('message', 'Size Updated Successfully.')
             ->assertSessionHas('size.id', $size->id);
 
@@ -145,10 +145,10 @@ class SizeControllerTest extends TestCase
         $size = Size::factory()->create();
 
         $response = $this->actingAs($this->admin)
-            ->from('size')
-            ->delete(route('size.destroy', $size));
+            ->from('sizes')
+            ->delete(route('sizes.destroy', $size));
 
-        $response->assertRedirect(route('size.index'))
+        $response->assertRedirect(route('sizes.index'))
             ->assertSessionHas('message', 'Size Deleted Successfully.');
 
         $this->assertDeleted($size);

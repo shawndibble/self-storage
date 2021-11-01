@@ -13,7 +13,7 @@ import LockOpen from '@mui/icons-material/LockOpen';
 import { useSnackbar } from 'notistack';
 
 const openPage = ({ row }) => Inertia.visit(`/storage-unit/${row?.id}`);
-const visitUser = (userId) => Inertia.visit(`/user/${userId}`);
+const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
 
 export default function StorageUnits({ storageUnits }) {
   const { enqueueSnackbar } = useSnackbar();

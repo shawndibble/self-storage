@@ -9,8 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Tooltip } from '@mui/material';
 
-const openPage = ({ row }) => Inertia.visit(`/payment/${row?.id}`);
-const visitUser = (userId) => Inertia.visit(`/user/${userId}`);
+const openPage = ({ row }) => Inertia.visit(`/payments/${row?.id}`);
+const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
 const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' });
 const currencyFormat = new Intl.NumberFormat('en-US', {
   style: 'currency',

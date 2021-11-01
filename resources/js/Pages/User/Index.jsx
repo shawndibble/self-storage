@@ -7,7 +7,7 @@ import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 
 const openPage = ({ row }) => {
-  Inertia.visit(`/user/${row?.id}`);
+  Inertia.visit(`/users/${row?.id}`);
 };
 
 export default function Users({ users }) {

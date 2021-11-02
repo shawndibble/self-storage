@@ -16,7 +16,8 @@ class Invoice extends Model
      */
     protected $fillable = [
         'user_id',
-        'total',
+        'amount',
+        'due_date'
     ];
 
     /**
@@ -27,6 +28,7 @@ class Invoice extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
+        'due_date' => 'datetime'
     ];
 
 

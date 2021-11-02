@@ -12,13 +12,13 @@ import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import { useSnackbar } from 'notistack';
 
-const openPage = ({ row }) => Inertia.visit(`/storage-unit/${row?.id}`);
+const openPage = ({ row }) => Inertia.visit(`/storage-units/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
 
 export default function StorageUnits({ storageUnits }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const toggleLock = ({ row }) => Inertia.patch(`/storage-unit/${row?.id}`, {
+  const toggleLock = ({ row }) => Inertia.patch(`/storage-units/${row?.id}`, {
     is_locked: row.is_locked ? 0 : 1,
   }, {
     onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),

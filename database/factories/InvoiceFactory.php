@@ -24,7 +24,8 @@ class InvoiceFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'total' => $this->faker->numberBetween(0, 10000),
+            'amount' => $this->faker->numberBetween(0, 10000),
+            'due_date' => $this->faker->dateTime(),
         ];
     }
 }

@@ -1,31 +1,63 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
+import PropTypes from 'prop-types';
+import { Head } from '@inertiajs/inertia-react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
 import UserInfo from './UserInfo';
+import UserTransactions from './UserTransactions';
+import { currencyFormat } from '@/Helpers/Formatters';
 
-export default function UserDetails({ user }) {
+export default function UserDetails({
+  user, transactions, invoiceTotal, paymentTotal,
+}) {
+  const balance = invoiceTotal - paymentTotal;
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={4}>
-        <Card>
+    <>
+      <Head title={user.name} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
           <UserInfo user={user} />
-        </Card>
-      </Grid>
+        </Grid>
 
-      <Grid item xs={12} md={8}>
-        <Card>
-          <CardContent>
-            <Typography>Payments</Typography>
-            <Grid container>
-              <Grid item />
+        <Grid item xs={12} md={8}>
+          <Grid container spacing={2} mb={2}>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Grid container justifyContent="space-between">
+                    <Typography variant="body1">Payments: </Typography>
+                    <Typography variant="h5">{currencyFormat(paymentTotal)}</Typography>
+                  </Grid>
+                </CardContent>
+              </Card>
             </Grid>
-          </CardContent>
-        </Card>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Grid container justifyContent="space-between">
+                    <Typography variant="body1">Past Due: </Typography>
+                    <Typography variant="h5" color={balance < 0 && 'error'}>3 Days</Typography>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card>
+                <CardContent>
+                  <Grid container justifyContent="space-between">
+                    <Typography variant="body1">Balance: </Typography>
+                    <Typography variant="h5" color={balance < 0 && 'error'}>{currencyFormat(balance)}</Typography>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+          <UserTransactions transactions={transactions} />
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 
@@ -41,4 +73,11 @@ UserDetails.propTypes = {
     zip: PropTypes.string,
     is_admin: PropTypes.bool,
   }).isRequired,
+  transactions: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string,
+    date: PropTypes.string,
+    amount: PropTypes.number,
+  })).isRequired,
+  invoiceTotal: PropTypes.string.isRequired,
+  paymentTotal: PropTypes.string.isRequired,
 };

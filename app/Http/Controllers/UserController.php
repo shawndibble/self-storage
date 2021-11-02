@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,8 +56,22 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
+        $invoices = DB::table('invoices')
+            ->select('id', 'amount', 'due_date as date', DB::raw('"Invoice" as type'))
+            ->where('user_id', $user->id);
+
+        $transactions = DB::table('payments')
+            ->select('id', 'amount', 'paid_at as date', DB::raw('"Payment" as type'))
+            ->where('user_id', $user->id)
+            ->union($invoices)
+            ->orderBy('date', 'desc')
+            ->get();
+
         return Inertia::render('User/Show', [
-            'user' => $user->load('payments', 'invoices.items'),
+            'user' => $user->load('storageUnits.size'),
+            'transactions' => $transactions,
+            'invoiceTotal' => Invoice::where('user_id', $user->id)->sum('amount'),
+            'paymentTotal' => Payment::where('user_id', $user->id)->sum('amount'),
         ]);
     }
 

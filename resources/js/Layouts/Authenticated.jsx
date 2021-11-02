@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -72,7 +72,7 @@ function Layout({ children }) {
   const { site, errors } = children.props;
   // eslint-disable-next-line no-console
   if (Object.keys(errors).length !== 0) console.log(errors);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -83,12 +83,12 @@ function Layout({ children }) {
     return (
       <>
         {' '}
-        <ArrowForwardIosIcon />
+        <NavigateNextIcon fontSize="small" />
         {' '}
         {PageName(children?.type.name)}
         {!!level2 && (
           <>
-            <ArrowForwardIosIcon />
+            <NavigateNextIcon fontSize="small" />
             {` ${level2}`}
           </>
         )}

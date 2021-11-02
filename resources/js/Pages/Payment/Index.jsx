@@ -8,14 +8,10 @@ import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Tooltip } from '@mui/material';
+import { currencyFormat, dateFormat } from '@/Helpers/Formatters';
 
 const openPage = ({ row }) => Inertia.visit(`/payments/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
-const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' });
-const currencyFormat = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
 
 export default function Payments({ payments }) {
   const columns = [
@@ -52,7 +48,7 @@ export default function Payments({ payments }) {
       type: 'number',
       flex: 1,
       minWidth: 100,
-      valueFormatter: (params) => currencyFormat.format(params.value / 100),
+      valueFormatter: (params) => currencyFormat(params.value),
       valueParser: (value) => Number(value) * 100,
     },
     {

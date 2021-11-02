@@ -69,18 +69,20 @@ class InvoiceControllerTest extends TestCase
     public function store_saves_and_redirects()
     {
         $user = User::factory()->create();
-        $total = $this->faker->numberBetween(1, 10000);
+        $amount = $this->faker->numberBetween(1, 10000);
+        $dueDate = $this->faker->dateTime();
 
         $response = $this->actingAs($this->admin)
             ->from('/invoices')
             ->post(route('invoices.store'), [
                 'user_id' => $user->id,
-                'total' => $total,
+                'amount' => $amount,
+                'due_date' => $dueDate,
             ]);
 
         $invoices = Invoice::query()
             ->where('user_id', $user->id)
-            ->where('total', $total)
+            ->where('amount', $amount)
             ->get();
         $this->assertCount(1, $invoices);
         $invoice = $invoices->first();
@@ -119,13 +121,15 @@ class InvoiceControllerTest extends TestCase
     {
         $invoice = Invoice::factory()->create();
         $user = User::factory()->create();
-        $total = $this->faker->numberBetween(1, 10000);
+        $amount = $this->faker->numberBetween(1, 10000);
+        $dueDate = $this->faker->dateTime();
 
         $response = $this->actingAs($this->admin)
             ->from('/invoices')
             ->put(route('invoices.update', $invoice), [
                 'user_id' => $user->id,
-                'total' => $total,
+                'amount' => $amount,
+                'due_date' => $dueDate
             ]);
 
         $invoice->refresh();
@@ -135,7 +139,8 @@ class InvoiceControllerTest extends TestCase
             ->assertSessionHas('invoice.id', $invoice->id);
 
         $this->assertEquals($user->id, $invoice->user_id);
-        $this->assertEquals($total, $invoice->total);
+        $this->assertEquals($amount, $invoice->amount);
+        $this->assertEquals($dueDate, $invoice->due_date);
     }
 
 

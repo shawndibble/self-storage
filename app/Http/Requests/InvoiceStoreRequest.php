@@ -24,8 +24,9 @@ class InvoiceStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-            'total' => ['required', 'integer'],
+            'user_id' => 'required|integer|exists:users,id',
+            'amount' => 'required|integer',
+            'due_date' => 'required|date'
         ];
     }
 }

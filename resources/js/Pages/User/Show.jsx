@@ -7,12 +7,14 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import UserInfo from './UserInfo';
 import UserTransactions from './UserTransactions';
-import { currencyFormat } from '@/Helpers/Formatters';
+import { currencyFormat, daysAgoFormat } from '@/Helpers/Formatters';
 
 export default function UserDetails({
   user, transactions, invoiceTotal, paymentTotal,
 }) {
-  const balance = invoiceTotal - paymentTotal;
+  const balance = paymentTotal - invoiceTotal;
+  const mostRecentTransaction = transactions.find((row) => row.type === 'Invoice');
+  const pastDue = balance < 0 ? `${daysAgoFormat(mostRecentTransaction.date)} Days` : 'Paid Up';
   return (
     <>
       <Head title={user.name} />
@@ -38,7 +40,9 @@ export default function UserDetails({
                 <CardContent>
                   <Grid container justifyContent="space-between">
                     <Typography variant="body1">Past Due: </Typography>
-                    <Typography variant="h5" color={balance < 0 && 'error'}>3 Days</Typography>
+                    <Typography variant="h5" color={balance < 0 && 'error'}>
+                      {pastDue}
+                    </Typography>
                   </Grid>
                 </CardContent>
               </Card>
@@ -48,7 +52,9 @@ export default function UserDetails({
                 <CardContent>
                   <Grid container justifyContent="space-between">
                     <Typography variant="body1">Balance: </Typography>
-                    <Typography variant="h5" color={balance < 0 && 'error'}>{currencyFormat(balance)}</Typography>
+                    <Typography variant="h5" color={balance < 0 ? 'error' : (balance > 0 && 'green')}>
+                      {currencyFormat(balance)}
+                    </Typography>
                   </Grid>
                 </CardContent>
               </Card>
@@ -78,6 +84,6 @@ UserDetails.propTypes = {
     date: PropTypes.string,
     amount: PropTypes.number,
   })).isRequired,
-  invoiceTotal: PropTypes.string.isRequired,
-  paymentTotal: PropTypes.string.isRequired,
+  invoiceTotal: PropTypes.number.isRequired,
+  paymentTotal: PropTypes.number.isRequired,
 };

@@ -9,6 +9,7 @@ export default function PaymentDetails({ payment }) {
       <Grid item xs={12}>
         <Card>
           Payment Page
+          {payment.amount}
         </Card>
       </Grid>
     </Grid>
@@ -18,5 +19,6 @@ export default function PaymentDetails({ payment }) {
 PaymentDetails.propTypes = {
   payment: PropTypes.shape({
     user: PropTypes.string,
+    amount: PropTypes.string,
   }).isRequired,
 };

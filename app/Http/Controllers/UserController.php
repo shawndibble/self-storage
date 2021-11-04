@@ -57,11 +57,11 @@ class UserController extends Controller
     public function show(User $user): Response
     {
         $invoices = DB::table('invoices')
-            ->select('id', 'amount', 'due_date as date', DB::raw('"Invoice" as type'))
+            ->select('id as record_id', 'amount', 'due_date as date', DB::raw('"Invoice" as type'))
             ->where('user_id', $user->id);
 
         $transactions = DB::table('payments')
-            ->select('id', 'amount', 'paid_at as date', DB::raw('"Payment" as type'))
+            ->select('id as record_id', 'amount', 'paid_at as date', DB::raw('"Payment" as type'))
             ->where('user_id', $user->id)
             ->union($invoices)
             ->orderBy('date', 'desc')
@@ -70,8 +70,8 @@ class UserController extends Controller
         return Inertia::render('User/Show', [
             'user' => $user->load('storageUnits.size'),
             'transactions' => $transactions,
-            'invoiceTotal' => Invoice::where('user_id', $user->id)->sum('amount'),
-            'paymentTotal' => Payment::where('user_id', $user->id)->sum('amount'),
+            'invoiceTotal' => (int)Invoice::where('user_id', $user->id)->sum('amount'),
+            'paymentTotal' => (int)Payment::where('user_id', $user->id)->sum('amount'),
         ]);
     }
 

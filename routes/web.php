@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingsController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\StorageUnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ use Inertia\Inertia;
 Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('users', UserController::class)->except(['edit']);
     Route::resource('sizes', SizeController::class)->except(['edit']);
     Route::resource('storage-units', StorageUnitController::class)->except(['edit']);

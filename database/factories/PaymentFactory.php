@@ -25,7 +25,7 @@ class PaymentFactory extends Factory
         return [
             'user_id' => User::factory(),
             'amount' => $this->faker->numberBetween(0, 10000),
-            'paid_at' => $this->faker->dateTime(),
+            'paid_at' => $this->faker->dateTimeThisDecade(),
         ];
     }
 }

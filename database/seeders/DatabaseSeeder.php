@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         User::factory(10)
-            ->has(Payment::factory()->count(5))
-            ->has(Invoice::factory()->count(5)
+            ->has(Payment::factory()->count(20))
+            ->has(Invoice::factory()->count(20)
                 ->has(InvoiceItem::factory()->count(2), 'items'))
             ->has(StorageUnit::factory()
                 ->state(fn() => ['size_id' => random_int(1, 3)]))

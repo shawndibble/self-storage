@@ -12,6 +12,7 @@ export default function InvoiceDetails({ invoice }) {
         <Grid item xs={12}>
           <Card>
             Invoice Page
+            {invoice.amount}
           </Card>
         </Grid>
       </Grid>
@@ -22,5 +23,6 @@ export default function InvoiceDetails({ invoice }) {
 InvoiceDetails.propTypes = {
   invoice: PropTypes.shape({
     user: PropTypes.string,
+    amount: PropTypes.string,
   }).isRequired,
 };

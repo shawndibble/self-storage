@@ -16,13 +16,14 @@ import LockOpen from '@mui/icons-material/LockOpen';
 import { currencyFormat } from '@/Helpers/Formatters';
 
 export default function UserInfo({ user }) {
-  console.log(user);
   return (
     <>
       <Card sx={{ marginBottom: '16px' }}>
         <CardContent>
-          <div>{!!user.is_admin && <Chip label="Administrator" color="primary" size="small" />}</div>
           <Typography variant="h5" textAlign="center">{user.name}</Typography>
+          <div style={{ textAlign: 'center' }}>
+            {!!user.is_admin && <Chip label="Administrator" color="primary" size="small" />}
+          </div>
         </CardContent>
         <Table>
           <TableBody>

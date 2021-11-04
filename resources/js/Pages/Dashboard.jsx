@@ -1,18 +1,43 @@
 import React from 'react';
 import { Head } from '@inertiajs/inertia-react';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import PropTypes from 'prop-types';
+import { currencyFormat } from '@/Helpers/Formatters';
 
-export default function Dashboard() {
+export default function Dashboard({ monthlySales }) {
   return (
     <>
       <Head title="Dashboard" />
 
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 bg-white border-b border-gray-200">You are logged in!</div>
-          </div>
-        </div>
-      </div>
+      <Grid container>
+        <Grid item>
+          <Card>
+            <CardContent>
+              <ul>
+                {monthlySales.map(({ month, year, total }) => (
+                  <li key={`${year}-${month}`}>
+                    {month}
+                    /
+                    {year}
+                    {' => '}
+                    {currencyFormat(total)}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </>
   );
 }
+
+Dashboard.propTypes = {
+  monthlySales: PropTypes.arrayOf(PropTypes.shape({
+    month: PropTypes.number,
+    year: PropTypes.number,
+    total: PropTypes.string,
+  })).isRequired,
+};

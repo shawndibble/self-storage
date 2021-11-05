@@ -39,7 +39,6 @@ class UserControllerTest extends TestCase
         $loggedIn->get("/users/{$this->admin->id}")->assertStatus(403);
 
         $loggedIn->get('/users')->assertStatus(403);
-        $loggedIn->get('/users/create')->assertStatus(403);
         $loggedIn->post('/users')->assertStatus(403);
         $loggedIn->delete("/users/{$user->id}")->assertStatus(403);
     }

@@ -6,11 +6,14 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\StorageUnit;
 use App\Models\User;
+use App\Repositories\StorageUnitRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -22,18 +25,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(StorageUnitRepository $storageUnit): Response
     {
-        $users = User::all();
-        return Inertia::render('User/Index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('User/Create');
+        return Inertia::render('User/Index', [
+            'users' => User::with('storageUnits')->get(),
+            'storageUnits' => Inertia::lazy(fn() => $storageUnit->selectIndex()),
+        ]);
     }
 
     /**
@@ -41,10 +38,19 @@ class UserController extends Controller
      *
      * @param UserCreateRequest $request
      * @return RedirectResponse
+     * @throws Throwable
      */
-    public function store(UserCreateRequest $request): RedirectResponse
+    public function store(UserCreateRequest $request)
     {
-        User::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $validated = $request->validated();
+            $user = User::create($validated);
+
+            if ($request->filled('storageUnit')) {
+                StorageUnit::find($validated['storageUnit'])->update(['user_id' => $user->id]);
+            }
+        });
+
         return back()->with('message', 'User Created Successfully.');
     }
 

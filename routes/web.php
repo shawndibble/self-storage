@@ -24,7 +24,7 @@ Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::resource('users', UserController::class)->except(['edit']);
+    Route::resource('users', UserController::class)->except(['create', 'edit']);
     Route::resource('sizes', SizeController::class)->except(['edit']);
     Route::resource('storage-units', StorageUnitController::class)->except(['edit']);
     Route::resource('invoices', InvoiceController::class)->except(['edit']);

@@ -15,14 +15,15 @@ class UserCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'email|unique:users,email_address',
+            'email' => 'email|unique:users,email|nullable',
             'is_admin' => 'bool',
-            'address' => 'string',
-            'address2' => 'string',
-            'city' => 'string',
-            'state' => 'string|min:2|max:2',
-            'zip' => 'string',
-            'phone' => 'integer'
+            'address' => 'string|nullable',
+            'address2' => 'string|nullable',
+            'city' => 'string|nullable',
+            'state' => 'string|min:2|max:2|nullable',
+            'zip' => 'string|nullable',
+            'phone' => 'nullable',
+            'storageUnit' => 'integer|nullable'
         ];
     }
 }

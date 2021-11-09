@@ -14,7 +14,7 @@ export default function UserDetails({
 }) {
   const balance = paymentTotal - invoiceTotal;
   const mostRecentTransaction = transactions.find((row) => row.type === 'Invoice');
-  const pastDue = balance < 0 ? `${daysAgoFormat(mostRecentTransaction.date)} Days` : 'Paid Up';
+  const pastDue = balance < 0 ? `${daysAgoFormat(mostRecentTransaction.date)} Days` : '--';
   return (
     <>
       <Head title={user.name} />

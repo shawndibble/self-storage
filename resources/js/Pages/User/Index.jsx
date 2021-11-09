@@ -8,7 +8,7 @@ import Card from '@mui/material/Card';
 import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 import DialogForm from '@/Components/DialogForm';
-import CreateUser from './Create';
+import UserForm from './UserForm';
 
 const openPage = ({ row }) => {
   Inertia.visit(`/users/${row?.id}`);
@@ -67,7 +67,7 @@ export default function Users({ users, storageUnits }) {
         </div>
       </Card>
       <DialogForm open={openCreate} title="Create User">
-        <CreateUser onClose={() => setOpenCreate(false)} storageUnits={storageUnits} />
+        <UserForm onClose={() => setOpenCreate(false)} storageUnits={storageUnits} />
       </DialogForm>
       <Fab
         color="primary"

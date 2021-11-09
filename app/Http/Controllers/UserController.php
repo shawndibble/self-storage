@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Repositories\StorageUnitRepository;
+use App\Http\Requests\UserRequest;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\StorageUnit;
 use App\Models\User;
-use App\Repositories\StorageUnitRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -36,18 +35,18 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserCreateRequest $request
+     * @param UserRequest $request
      * @return RedirectResponse
      * @throws Throwable
      */
-    public function store(UserCreateRequest $request)
+    public function store(UserRequest $request): RedirectResponse
     {
         DB::transaction(function () use ($request) {
             $validated = $request->validated();
             $user = User::create($validated);
 
             if ($request->filled('storageUnit')) {
-                StorageUnit::find($validated['storageUnit'])->update(['user_id' => $user->id]);
+                StorageUnit::where('id', $validated['storageUnit'])->update(['user_id' => $user->id]);
             }
         });
 
@@ -58,9 +57,10 @@ class UserController extends Controller
      * Display the specified resource & edit it.
      *
      * @param User $user
+     * @param StorageUnitRepository $storageUnit
      * @return Response
      */
-    public function show(User $user): Response
+    public function show(User $user, StorageUnitRepository $storageUnit): Response
     {
         $invoices = DB::table('invoices')
             ->select('id as record_id', 'amount', 'due_date as date', DB::raw('"Invoice" as type'))
@@ -78,17 +78,18 @@ class UserController extends Controller
             'transactions' => $transactions,
             'invoiceTotal' => (int)Invoice::where('user_id', $user->id)->sum('amount'),
             'paymentTotal' => (int)Payment::where('user_id', $user->id)->sum('amount'),
+            'storageUnits' => Inertia::lazy(fn() => $storageUnit->selectIndex()),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UserUpdateRequest $request
+     * @param UserRequest $request
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(UserUpdateRequest $request, User $user): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
         $user->update($request->validated());
         return back()->with('message', 'User Updated Successfully.');

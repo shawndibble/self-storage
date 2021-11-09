@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.jsx', 'public/js')
-  .sourceMaps(false, 'source-map')
+  .sourceMaps(false, 'eval-source-map')
   .react()
   .postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),

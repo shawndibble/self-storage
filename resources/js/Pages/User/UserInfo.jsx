@@ -13,14 +13,33 @@ import CardContent from '@mui/material/CardContent';
 import Link from '@mui/material/Link';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
+import EditIcon from '@mui/icons-material/Edit';
+import { Inertia } from '@inertiajs/inertia';
+import IconButton from '@mui/material/IconButton';
 import { currencyFormat } from '@/Helpers/Formatters';
+import DialogForm from '@/Components/DialogForm';
+import UserForm from '@/Pages/User/UserForm';
 
-export default function UserInfo({ user }) {
+export default function UserInfo({ user, storageUnits }) {
+  const [openCreate, setOpenCreate] = React.useState(false);
+  const editUser = () => {
+    Inertia.reload({
+      preserveState: true,
+      only: ['storageUnits'],
+    });
+    setOpenCreate(true);
+  };
+
   return (
     <>
       <Card sx={{ marginBottom: '16px' }}>
         <CardContent>
-          <Typography variant="h5" textAlign="center">{user.name}</Typography>
+          <Typography variant="h5" textAlign="center">
+            {user.name}
+            <IconButton aria-label={`Edit ${user.name}`} onClick={editUser} size="small">
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Typography>
           <div style={{ textAlign: 'center' }}>
             {!!user.is_admin && <Chip label="Administrator" color="primary" size="small" />}
           </div>
@@ -31,7 +50,10 @@ export default function UserInfo({ user }) {
               <TableCell align="right" valign="top">
                 Email:
               </TableCell>
-              <TableCell sx={{ maxWidth: 0, textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              <TableCell sx={{
+                maxWidth: 0, textOverflow: 'ellipsis', overflow: 'hidden', width: '90%',
+              }}
+              >
                 <Link href={`mailto:${user.email}`}>{user.email}</Link>
               </TableCell>
             </TableRow>
@@ -102,9 +124,16 @@ export default function UserInfo({ user }) {
           ))}
         </CardContent>
       </Card>
+      <DialogForm open={openCreate} title="Edit User">
+        <UserForm onClose={() => setOpenCreate(false)} storageUnits={storageUnits} user={user} />
+      </DialogForm>
     </>
   );
 }
+
+UserInfo.defaultProps = {
+  storageUnits: [{}],
+};
 
 UserInfo.propTypes = {
   user: PropTypes.shape({
@@ -122,4 +151,5 @@ UserInfo.propTypes = {
       notes: PropTypes.string,
     })),
   }).isRequired,
+  storageUnits: PropTypes.arrayOf(PropTypes.object),
 };

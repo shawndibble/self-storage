@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\StorageUnitController;
-use App\Http\Requests\StorageUnitStoreRequest;
+use App\Http\Requests\StorageUnitRequest;
 use App\Http\Requests\StorageUnitUpdateRequest;
 use App\Models\Size;
 use App\Models\StorageUnit;
@@ -61,7 +61,7 @@ class StorageUnitControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             StorageUnitController::class,
             'store',
-            StorageUnitStoreRequest::class
+            StorageUnitRequest::class
         );
     }
 

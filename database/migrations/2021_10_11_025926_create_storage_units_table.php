@@ -20,7 +20,7 @@ class CreateStorageUnitsTable extends Migration
             $table->string('name')->unique();
             $table->foreignId('size_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->tinyInteger('is_locked')->default(0);
+            $table->boolean('is_locked')->default(false);
             $table->text('notes')->nullable();
             $table->timestamps();
         });

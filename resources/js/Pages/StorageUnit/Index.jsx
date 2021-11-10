@@ -11,18 +11,30 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import { useSnackbar } from 'notistack';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import DialogForm from '@/Components/DialogForm';
+import StorageUnitForm from '@/Pages/StorageUnit/StorageUnitForm';
 
 const openPage = ({ row }) => Inertia.visit(`/storage-units/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
 
-export default function StorageUnits({ storageUnits }) {
+export default function StorageUnits({ storageUnits, sizes }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const toggleLock = ({ row }) => Inertia.patch(`/storage-units/${row?.id}`, {
-    is_locked: row.is_locked ? 0 : 1,
-  }, {
-    onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),
-  });
+  const [openForm, setOpenForm] = React.useState(false);
+  const createStorageUnit = () => {
+    Inertia.reload({
+      preserveState: true,
+    });
+    setOpenForm(true);
+  };
+
+  const toggleLock = ({ row }) => Inertia.patch(
+    `/storage-units/${row?.id}`,
+    { is_locked: row.is_locked ? 0 : 1 },
+    { onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }) },
+  );
 
   const columns = [
     {
@@ -39,8 +51,8 @@ export default function StorageUnits({ storageUnits }) {
       filterable: false,
       sortComparator: (
         v1, v2, cellParams1, cellParams2,
-      ) => (cellParams1.value.name).localeCompare(cellParams2.value.name),
-      renderCell: (params) => (
+      ) => (cellParams1.value?.name).localeCompare(cellParams2.value?.name),
+      renderCell: (params) => params.value?.name && (
         <>
           {params.value.name}
           <Tooltip title={`Open ${params.value.name}`}>
@@ -85,10 +97,26 @@ export default function StorageUnits({ storageUnits }) {
           />
         </div>
       </Card>
+      <DialogForm open={openForm} title="Create Storage Unit">
+        <StorageUnitForm
+          onClose={() => setOpenForm(false)}
+          storageUnits={storageUnits}
+          sizes={sizes}
+        />
+      </DialogForm>
+      <Fab
+        color="primary"
+        aria-label="Create User"
+        sx={{ position: 'absolute', bottom: 24, right: 24 }}
+        onClick={() => createStorageUnit()}
+      >
+        <AddIcon />
+      </Fab>
     </>
   );
 }
 
 StorageUnits.propTypes = {
   storageUnits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

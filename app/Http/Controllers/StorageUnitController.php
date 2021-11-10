@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorageUnitStoreRequest;
-use App\Http\Requests\StorageUnitUpdateRequest;
+use App\Http\Requests\StorageUnitRequest;
+use App\Models\Size;
 use App\Models\StorageUnit;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -17,8 +17,9 @@ class StorageUnitController extends Controller
     public function index(): Response
     {
         $storageUnits = StorageUnit::with('size', 'user:id,name')->get();
+        $sizes = Size::all();
 
-        return Inertia::render('StorageUnit/Index', compact('storageUnits'));
+        return Inertia::render('StorageUnit/Index', compact('storageUnits', 'sizes'));
     }
 
     /**
@@ -30,11 +31,12 @@ class StorageUnitController extends Controller
     }
 
     /**
-     * @param StorageUnitStoreRequest $request
+     * @param StorageUnitRequest $request
      * @return RedirectResponse
      */
-    public function store(StorageUnitStoreRequest $request): RedirectResponse
+    public function store(StorageUnitRequest $request): RedirectResponse
     {
+        sleep(3);
         $storageUnit = StorageUnit::create($request->validated());
 
         $request->session()->flash('storageUnit.id', $storageUnit->id);
@@ -52,11 +54,11 @@ class StorageUnitController extends Controller
     }
 
     /**
-     * @param StorageUnitUpdateRequest $request
+     * @param StorageUnitRequest $request
      * @param StorageUnit $storageUnit
      * @return RedirectResponse
      */
-    public function update(StorageUnitUpdateRequest $request, StorageUnit $storageUnit): RedirectResponse
+    public function update(StorageUnitRequest $request, StorageUnit $storageUnit): RedirectResponse
     {
         $storageUnit->update($request->validated());
 

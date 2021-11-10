@@ -16,18 +16,10 @@ class StorageUnitController extends Controller
      */
     public function index(): Response
     {
-        $storageUnits = StorageUnit::with('size', 'user:id,name')->get();
-        $sizes = Size::all();
-
-        return Inertia::render('StorageUnit/Index', compact('storageUnits', 'sizes'));
-    }
-
-    /**
-     * @return Response
-     */
-    public function create(): Response
-    {
-        return Inertia::render('StorageUnit/Create');
+        return Inertia::render('StorageUnit/Index', [
+            'storageUnits' => StorageUnit::with('size', 'user:id,name')->get(),
+            'sizes' => Inertia::lazy(fn() => Size::all())
+        ]);
     }
 
     /**
@@ -36,7 +28,6 @@ class StorageUnitController extends Controller
      */
     public function store(StorageUnitRequest $request): RedirectResponse
     {
-        sleep(3);
         $storageUnit = StorageUnit::create($request->validated());
 
         $request->session()->flash('storageUnit.id', $storageUnit->id);
@@ -45,12 +36,15 @@ class StorageUnitController extends Controller
     }
 
     /**
-     * @param StorageUnit $storageUnit
+     * @param $id
      * @return Response
      */
-    public function show(StorageUnit $storageUnit): Response
+    public function show($id): Response
     {
-        return Inertia::render('StorageUnit/Show', compact('storageUnit'));
+        return Inertia::render('StorageUnit/Show', [
+            'sizes' => Inertia::lazy(fn() => Size::all()),
+            'storageUnit' => StorageUnit::with(['user:id,name', 'size'])->findOrFail($id),
+        ]);
     }
 
     /**

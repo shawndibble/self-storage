@@ -14,7 +14,7 @@ import { useSnackbar } from 'notistack';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import DialogForm from '@/Components/DialogForm';
-import StorageUnitForm from '@/Pages/StorageUnit/StorageUnitForm';
+import Form from '@/Pages/StorageUnit/Form';
 
 const openPage = ({ row }) => Inertia.visit(`/storage-units/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
@@ -26,8 +26,9 @@ export default function StorageUnits({ storageUnits, sizes }) {
   const createStorageUnit = () => {
     Inertia.reload({
       preserveState: true,
+      only: ['sizes'],
+      onFinish: setOpenForm(true),
     });
-    setOpenForm(true);
   };
 
   const toggleLock = ({ row }) => Inertia.patch(
@@ -98,7 +99,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
         </div>
       </Card>
       <DialogForm open={openForm} title="Create Storage Unit">
-        <StorageUnitForm
+        <Form
           onClose={() => setOpenForm(false)}
           storageUnits={storageUnits}
           sizes={sizes}
@@ -116,7 +117,11 @@ export default function StorageUnits({ storageUnits, sizes }) {
   );
 }
 
+StorageUnits.defaultProps = {
+  sizes: [{}],
+};
+
 StorageUnits.propTypes = {
   storageUnits: PropTypes.arrayOf(PropTypes.object).isRequired,
-  sizes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.object),
 };

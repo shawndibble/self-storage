@@ -13,6 +13,8 @@ import Button from '@mui/material/Button';
 export default function UserForm({ onClose, storageUnits, user }) {
   const { enqueueSnackbar } = useSnackbar();
 
+  console.log('storageUnits', storageUnits);
+
   const {
     data, setData, post, patch, processing, errors,
   } = useForm({
@@ -146,7 +148,7 @@ export default function UserForm({ onClose, storageUnits, user }) {
               helperText={errors.zip?.[0]}
             />
           </Grid>
-          {!!Object.keys(storageUnits[0]).length && (
+          {!!storageUnits && !!Object.keys(storageUnits[0]).length && (
             <Grid item xs={12}>
               <TextField
                 name="storageUnit"
@@ -170,7 +172,7 @@ export default function UserForm({ onClose, storageUnits, user }) {
 
       </DialogContent>
       <DialogActions>
-        <Button variant="text" color="text" autoFocus onClick={() => onClose()}>
+        <Button variant="text" autoFocus onClick={() => onClose()}>
           Cancel
         </Button>
         <LoadingButton variant="contained" type="submit" loading={processing}>Submit</LoadingButton>
@@ -180,7 +182,7 @@ export default function UserForm({ onClose, storageUnits, user }) {
 }
 
 UserForm.defaultProps = {
-  storageUnits: null,
+  storageUnits: [{}],
   user: {},
 };
 

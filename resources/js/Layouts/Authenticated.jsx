@@ -77,7 +77,12 @@ function Layout({ children }) {
   };
 
   const breadcrumbs = () => {
-    const level2 = children.props.user?.name || false;
+    const { type, props } = children;
+    const page = Object.keys(props).filter(
+      (key) => type.name.toLowerCase().includes(key.toLowerCase()),
+    );
+    const { name } = props[page];
+    const level2 = name || false;
     return (
       <>
         {' '}

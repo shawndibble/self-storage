@@ -1,14 +1,13 @@
 import React from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
-import AddIcon from '@mui/icons-material/Add';
 import { Inertia } from '@inertiajs/inertia';
-import Fab from '@mui/material/Fab';
 import Card from '@mui/material/Card';
 import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 import DialogForm from '@/Components/DialogForm';
 import UserForm from './UserForm';
+import CreateFab from '@/Components/CreateFab';
 
 const openPage = ({ row }) => {
   Inertia.visit(`/users/${row?.id}`);
@@ -69,14 +68,7 @@ export default function Users({ users, storageUnits }) {
       <DialogForm open={openCreate} title="Create User">
         <UserForm onClose={() => setOpenCreate(false)} storageUnits={storageUnits} />
       </DialogForm>
-      <Fab
-        color="primary"
-        aria-label="Create User"
-        sx={{ position: 'absolute', bottom: 24, right: 24 }}
-        onClick={() => createUser()}
-      >
-        <AddIcon />
-      </Fab>
+      <CreateFab label="Create User" onClick={() => createUser()} />
     </>
   );
 }

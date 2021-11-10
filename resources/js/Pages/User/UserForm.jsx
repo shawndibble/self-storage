@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { useForm } from '@inertiajs/inertia-react';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import DialogActions from '@mui/material/DialogActions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
+import TextField from '@/Components/Form/TextField';
 
 export default function UserForm({ onClose, storageUnits, user }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -53,36 +53,27 @@ export default function UserForm({ onClose, storageUnits, user }) {
               label="Name"
               id="name"
               required
-              fullWidth
               defaultValue={data.name}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.name?.length}
-              helperText={errors.name?.[0]}
+              error={errors.name}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               label="Email"
               id="email"
-              fullWidth
               defaultValue={data.email}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.email?.length}
-              helperText={errors.email?.[0]}
+              error={errors.email}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               label="Phone"
               id="phone"
-              fullWidth
               defaultValue={data.phone}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.phone?.length}
-              helperText={errors.phone?.[0]}
+              error={errors.phone}
             />
           </Grid>
 
@@ -90,60 +81,45 @@ export default function UserForm({ onClose, storageUnits, user }) {
             <TextField
               label="Address"
               id="address"
-              fullWidth
               defaultValue={data.address}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.address?.length}
-              helperText={errors.address?.[0]}
+              error={errors.address}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               label="Address 2"
               id="address2"
-              fullWidth
               defaultValue={data.address2}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.address2?.length}
-              helperText={errors.address2?.[0]}
+              error={errors.address2}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               label="City"
               id="city"
-              fullWidth
               defaultValue={data.city}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.city?.length}
-              helperText={errors.city?.[0]}
+              error={errors.city}
             />
           </Grid>
           <Grid item xs={12} sm={2}>
             <TextField
               label="State"
               id="state"
-              fullWidth
               defaultValue={data.state}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.state?.length}
-              helperText={errors.state?.[0]}
+              error={errors.state}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               label="Zip"
               id="zip"
-              fullWidth
               defaultValue={data.zip}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.zip?.length}
-              helperText={errors.zip?.[0]}
+              error={errors.zip}
             />
           </Grid>
           {!!storageUnits && !!Object.keys(storageUnits[0]).length && (

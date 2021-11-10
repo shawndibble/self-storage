@@ -5,10 +5,8 @@ import { Inertia } from '@inertiajs/inertia';
 import Card from '@mui/material/Card';
 import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import LaunchIcon from '@mui/icons-material/Launch';
-import { Tooltip } from '@mui/material';
 import { currencyFormat, dateFormat } from '@/Helpers/Formatters';
+import VisitUser from '@/Components/DataTable/VisitUser';
 
 const openPage = ({ row }) => Inertia.visit(`/payments/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
@@ -27,20 +25,7 @@ export default function Payments({ payments }) {
       sortComparator: (
         v1, v2, cellParams1, cellParams2,
       ) => (cellParams1.value.name).localeCompare(cellParams2.value.name),
-      renderCell: (params) => (
-        <>
-          {params.value.name}
-          <Tooltip title={`Open ${params.value.name}`}>
-            <IconButton
-              aria-label={`Open ${params.value.name}`}
-              onClick={() => visitUser(params.value.id)}
-              size="small"
-            >
-              <LaunchIcon fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-        </>
-      ),
+      renderCell: ({ value }) => value?.name && (<VisitUser visitUser={visitUser} value={value} />),
     },
     {
       field: 'amount',

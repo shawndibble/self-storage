@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
+import { useSnackbar } from 'notistack';
 import { useForm } from '@inertiajs/inertia-react';
-import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+import DialogContent from '@mui/material/DialogContent';
 import MenuItem from '@mui/material/MenuItem';
 import DialogActions from '@mui/material/DialogActions';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+import TextField from '@/Components/Form/TextField';
 
 export default function Form({ onClose, storageUnit, sizes }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -47,14 +47,10 @@ export default function Form({ onClose, storageUnit, sizes }) {
             <TextField
               label="Name"
               id="name"
-              required
-              fullWidth
               autoFocus
               defaultValue={data.name}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.name?.length}
-              helperText={errors.name?.[0]}
+              error={errors.name}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -66,11 +62,7 @@ export default function Form({ onClose, storageUnit, sizes }) {
                 label="Size"
                 value={data.size_id}
                 onChange={handleChange}
-                variant="standard"
-                fullWidth
-                error={!!errors.size_id}
-                helperText={errors.size_id?.[0]}
-                required
+                error={errors.size_id}
               >
                 <MenuItem sx={{ color: 'gray' }} value=""><em>Select unit size</em></MenuItem>
                 {sizes.map(({ id, name }) => (
@@ -85,14 +77,11 @@ export default function Form({ onClose, storageUnit, sizes }) {
             <TextField
               label="Notes"
               id="notes"
-              fullWidth
               multiline
               maxRows={4}
               defaultValue={data.notes}
               onChange={handleChange}
-              variant="standard"
-              error={!!errors.notes?.length}
-              helperText={errors.notes?.[0]}
+              error={errors.notes}
             />
           </Grid>
         </Grid>

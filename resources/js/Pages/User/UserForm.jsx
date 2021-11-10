@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import { Inertia } from '@inertiajs/inertia';
+import { useForm } from '@inertiajs/inertia-react';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import DialogActions from '@mui/material/DialogActions';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
-import { ErrorContext } from '@/Helpers/ErrorContext';
 
-export default function UserForm({
-  onClose, storageUnits, user,
-}) {
+export default function UserForm({ onClose, storageUnits, user }) {
   const { enqueueSnackbar } = useSnackbar();
-  const errors = React.useContext(ErrorContext);
 
-  const [values, setValues] = useState({
+  const {
+    data, setData, post, patch, processing, errors,
+  } = useForm({
     name: '',
     email: '',
     address: '',
@@ -31,11 +30,7 @@ export default function UserForm({
 
   function handleChange(e) {
     const key = e.target.id ?? e.target.name;
-    const { value } = e.target;
-    setValues({
-      ...values,
-      [key]: value,
-    });
+    setData(key, e.target.value);
   }
 
   function handleSubmit(e) {
@@ -46,9 +41,7 @@ export default function UserForm({
         onClose();
       },
     };
-    return user.id
-      ? Inertia.patch(`/users/${user.id}`, values, options)
-      : Inertia.post('/users', values, options);
+    return user.id ? patch(`/users/${user.id}`, options) : post('/users', options);
   }
 
   return (
@@ -61,7 +54,7 @@ export default function UserForm({
               id="name"
               required
               fullWidth
-              defaultValue={values.name}
+              defaultValue={data.name}
               onChange={handleChange}
               variant="standard"
               error={!!errors.name?.length}
@@ -73,7 +66,7 @@ export default function UserForm({
               label="Email"
               id="email"
               fullWidth
-              defaultValue={values.email}
+              defaultValue={data.email}
               onChange={handleChange}
               variant="standard"
               error={!!errors.email?.length}
@@ -85,7 +78,7 @@ export default function UserForm({
               label="Phone"
               id="phone"
               fullWidth
-              defaultValue={values.phone}
+              defaultValue={data.phone}
               onChange={handleChange}
               variant="standard"
               error={!!errors.phone?.length}
@@ -98,7 +91,7 @@ export default function UserForm({
               label="Address"
               id="address"
               fullWidth
-              defaultValue={values.address}
+              defaultValue={data.address}
               onChange={handleChange}
               variant="standard"
               error={!!errors.address?.length}
@@ -110,7 +103,7 @@ export default function UserForm({
               label="Address 2"
               id="address2"
               fullWidth
-              defaultValue={values.address2}
+              defaultValue={data.address2}
               onChange={handleChange}
               variant="standard"
               error={!!errors.address2?.length}
@@ -122,7 +115,7 @@ export default function UserForm({
               label="City"
               id="city"
               fullWidth
-              defaultValue={values.city}
+              defaultValue={data.city}
               onChange={handleChange}
               variant="standard"
               error={!!errors.city?.length}
@@ -134,7 +127,7 @@ export default function UserForm({
               label="State"
               id="state"
               fullWidth
-              defaultValue={values.state}
+              defaultValue={data.state}
               onChange={handleChange}
               variant="standard"
               error={!!errors.state?.length}
@@ -146,7 +139,7 @@ export default function UserForm({
               label="Zip"
               id="zip"
               fullWidth
-              defaultValue={values.zip}
+              defaultValue={data.zip}
               onChange={handleChange}
               variant="standard"
               error={!!errors.zip?.length}
@@ -159,7 +152,7 @@ export default function UserForm({
                 name="storageUnit"
                 select
                 label="Storage Unit"
-                value={values.storageUnit}
+                value={data.storageUnit}
                 onChange={handleChange}
                 helperText="Assign Storage Unit"
                 variant="standard"
@@ -177,10 +170,10 @@ export default function UserForm({
 
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={() => onClose()}>
+        <Button variant="text" color="text" autoFocus onClick={() => onClose()}>
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        <LoadingButton variant="contained" type="submit" loading={processing}>Submit</LoadingButton>
       </DialogActions>
     </form>
   );

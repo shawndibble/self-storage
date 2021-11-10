@@ -43,18 +43,6 @@ class StorageUnitControllerTest extends TestCase
             ->has('storageUnits', 3));
     }
 
-
-    /** @test */
-    public function create_displays_view()
-    {
-        $response = $this->actingAs($this->admin)
-            ->get(route('storage-units.create'));
-
-        $response->assertInertia(fn(Assert $page) => $page
-            ->component('StorageUnit/Create'));
-    }
-
-
     /** @test */
     public function store_uses_form_request_validation()
     {
@@ -113,7 +101,7 @@ class StorageUnitControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             StorageUnitController::class,
             'update',
-            StorageUnitUpdateRequest::class
+            StorageUnitRequest::class
         );
     }
 

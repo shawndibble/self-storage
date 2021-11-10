@@ -36,14 +36,14 @@ class StorageUnitController extends Controller
     }
 
     /**
-     * @param $id
+     * @param $identity
      * @return Response
      */
-    public function show($id): Response
+    public function show($identity): Response
     {
         return Inertia::render('StorageUnit/Show', [
             'sizes' => Inertia::lazy(fn() => Size::all()),
-            'storageUnit' => StorageUnit::with(['user:id,name', 'size'])->findOrFail($id),
+            'storageUnit' => StorageUnit::with(['user:id,name', 'size'])->findOrFail($identity),
         ]);
     }
 

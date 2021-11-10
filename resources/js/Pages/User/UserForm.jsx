@@ -13,8 +13,6 @@ import Button from '@mui/material/Button';
 export default function UserForm({ onClose, storageUnits, user }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  console.log('storageUnits', storageUnits);
-
   const {
     data, setData, post, patch, processing, errors,
   } = useForm({

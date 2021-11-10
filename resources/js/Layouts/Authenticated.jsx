@@ -81,7 +81,7 @@ function Layout({ children }) {
     const page = Object.keys(props).filter(
       (key) => type.name.toLowerCase().includes(key.toLowerCase()),
     );
-    const { name } = props[page];
+    const { name } = !!props[page] && props[page];
     const level2 = name || false;
     return (
       <>

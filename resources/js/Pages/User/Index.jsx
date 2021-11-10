@@ -68,7 +68,7 @@ export default function Users({ users, storageUnits }) {
       <DialogForm open={openCreate} title="Create User">
         <UserForm onClose={() => setOpenCreate(false)} storageUnits={storageUnits} />
       </DialogForm>
-      <CreateFab label="Create User" onClick={() => createUser()} />
+      <CreateFab label="Create User" onClick={createUser} />
     </>
   );
 }

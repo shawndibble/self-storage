@@ -89,7 +89,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
           sizes={sizes}
         />
       </DialogForm>
-      <CreateFab label="Create Storage Unit" onClick={() => createStorageUnit()} />
+      <CreateFab label="Create Storage Unit" onClick={createStorageUnit} />
     </>
   );
 }

@@ -17,7 +17,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PropTypes from 'prop-types';
 import { SnackbarProvider } from 'notistack';
-import { ErrorContext } from '@/Helpers/ErrorContext';
 import NavItems from './NavItems';
 import PageName from './PageName';
 
@@ -70,7 +69,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function Layout({ children }) {
-  const { site, errors } = children.props;
+  const { site } = children.props;
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -78,7 +77,12 @@ function Layout({ children }) {
   };
 
   const breadcrumbs = () => {
-    const level2 = children.props.user?.name || false;
+    const { type, props } = children;
+    const page = Object.keys(props).filter(
+      (key) => type.name.toLowerCase().includes(key.toLowerCase()),
+    );
+    const { name } = props[page];
+    const level2 = name || false;
     return (
       <>
         {' '}
@@ -97,76 +101,73 @@ function Layout({ children }) {
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <ErrorContext.Provider value={errors}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          TransitionComponent={Slide}
-        >
-          <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <AppBar position="fixed" open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-              <Toolbar>
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={toggleDrawer}
-                  sx={{ marginRight: '10px' }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Typography
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                  sx={{ flexGrow: 1 }}
-                >
-                  {site?.name}
-                  {breadcrumbs()}
-                </Typography>
-                <IconButton color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open}>
-              <Toolbar />
-              <NavItems page={children.type?.name} />
-            </Drawer>
-            <Box
-              component="main"
-              sx={{
-                backgroundColor: (theme) => (theme.palette.mode === 'light'
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900]),
-                flexGrow: 1,
-                height: '100vh',
-                overflow: 'auto',
-              }}
-            >
-              <Toolbar />
-              <Container maxWidth="lg" sx={{ mt: 3, mb: 3 }}>
-                <Grid container spacing={0}>
-                  {children}
-                </Grid>
-                <Copyright sx={{ pt: 3 }} site={site} />
-              </Container>
-            </Box>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        TransitionComponent={Slide}
+      >
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar position="fixed" open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{ marginRight: '10px' }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                sx={{ flexGrow: 1 }}
+              >
+                {site?.name}
+                {breadcrumbs()}
+              </Typography>
+              <IconButton color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={open}>
+            <Toolbar />
+            <NavItems page={children.type?.name} />
+          </Drawer>
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) => (theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900]),
+              flexGrow: 1,
+              height: '100vh',
+              overflow: 'auto',
+            }}
+          >
+            <Toolbar />
+            <Container maxWidth="lg" sx={{ mt: 3, mb: 3 }}>
+              <Grid container spacing={0}>
+                {children}
+              </Grid>
+              <Copyright sx={{ pt: 3 }} site={site} />
+            </Container>
           </Box>
-        </SnackbarProvider>
-      </ErrorContext.Provider>
+        </Box>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
 
 Layout.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   children: PropTypes.shape({
     props: PropTypes.shape({
       site: PropTypes.shape({
@@ -176,10 +177,9 @@ Layout.propTypes = {
       user: PropTypes.shape({
         name: PropTypes.string,
       }),
-      errors: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
     }),
     type: PropTypes.func,
-  }),
+  }).isRequired,
 };
 
 export default function Authenticated(children) {

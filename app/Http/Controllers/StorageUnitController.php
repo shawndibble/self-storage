@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorageUnitStoreRequest;
-use App\Http\Requests\StorageUnitUpdateRequest;
+use App\Http\Requests\StorageUnitRequest;
+use App\Models\Size;
 use App\Models\StorageUnit;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -16,24 +16,17 @@ class StorageUnitController extends Controller
      */
     public function index(): Response
     {
-        $storageUnits = StorageUnit::with('size', 'user:id,name')->get();
-
-        return Inertia::render('StorageUnit/Index', compact('storageUnits'));
+        return Inertia::render('StorageUnit/Index', [
+            'storageUnits' => StorageUnit::with('size', 'user:id,name')->get(),
+            'sizes' => Size::all()
+        ]);
     }
 
     /**
-     * @return Response
-     */
-    public function create(): Response
-    {
-        return Inertia::render('StorageUnit/Create');
-    }
-
-    /**
-     * @param StorageUnitStoreRequest $request
+     * @param StorageUnitRequest $request
      * @return RedirectResponse
      */
-    public function store(StorageUnitStoreRequest $request): RedirectResponse
+    public function store(StorageUnitRequest $request): RedirectResponse
     {
         $storageUnit = StorageUnit::create($request->validated());
 
@@ -43,20 +36,23 @@ class StorageUnitController extends Controller
     }
 
     /**
-     * @param StorageUnit $storageUnit
+     * @param $identity
      * @return Response
      */
-    public function show(StorageUnit $storageUnit): Response
+    public function show($identity): Response
     {
-        return Inertia::render('StorageUnit/Show', compact('storageUnit'));
+        return Inertia::render('StorageUnit/Show', [
+            'sizes' => Size::all(),
+            'storageUnit' => StorageUnit::with(['user:id,name', 'size'])->findOrFail($identity),
+        ]);
     }
 
     /**
-     * @param StorageUnitUpdateRequest $request
+     * @param StorageUnitRequest $request
      * @param StorageUnit $storageUnit
      * @return RedirectResponse
      */
-    public function update(StorageUnitUpdateRequest $request, StorageUnit $storageUnit): RedirectResponse
+    public function update(StorageUnitRequest $request, StorageUnit $storageUnit): RedirectResponse
     {
         $storageUnit->update($request->validated());
 

@@ -5,24 +5,34 @@ import { Inertia } from '@inertiajs/inertia';
 import Card from '@mui/material/Card';
 import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import LaunchIcon from '@mui/icons-material/Launch';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import { useSnackbar } from 'notistack';
+import DialogForm from '@/Components/DialogForm';
+import Form from '@/Pages/StorageUnit/Form';
+import VisitUser from '@/Components/DataTable/VisitUser';
+import CreateFab from '@/Components/CreateFab';
 
 const openPage = ({ row }) => Inertia.visit(`/storage-units/${row?.id}`);
 const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
 
-export default function StorageUnits({ storageUnits }) {
+export default function StorageUnits({ storageUnits, sizes }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const toggleLock = ({ row }) => Inertia.patch(`/storage-units/${row?.id}`, {
-    is_locked: row.is_locked ? 0 : 1,
-  }, {
-    onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),
-  });
+  const [openForm, setOpenForm] = React.useState(false);
+  const createStorageUnit = () => {
+    Inertia.reload({
+      preserveState: true,
+      only: ['sizes'],
+      onFinish: setOpenForm(true),
+    });
+  };
+
+  const toggleLock = ({ row }) => Inertia.patch(
+    `/storage-units/${row?.id}`,
+    { is_locked: row.is_locked ? 0 : 1 },
+    { onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }) },
+  );
 
   const columns = [
     {
@@ -35,25 +45,12 @@ export default function StorageUnits({ storageUnits }) {
       field: 'user',
       headerName: 'Customer',
       flex: 2,
-      minWidth: 200,
+      minWidth: 210,
       filterable: false,
       sortComparator: (
         v1, v2, cellParams1, cellParams2,
-      ) => (cellParams1.value.name).localeCompare(cellParams2.value.name),
-      renderCell: (params) => (
-        <>
-          {params.value.name}
-          <Tooltip title={`Open ${params.value.name}`}>
-            <IconButton
-              aria-label={`Open ${params.value.name}`}
-              onClick={() => visitUser(params.value.id)}
-              size="small"
-            >
-              <LaunchIcon fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-        </>
-      ),
+      ) => (cellParams1.value?.name).localeCompare(cellParams2.value?.name),
+      renderCell: ({ value }) => value?.name && (<VisitUser visitUser={visitUser} value={value} />),
     },
     {
       field: 'is_locked',
@@ -85,10 +82,23 @@ export default function StorageUnits({ storageUnits }) {
           />
         </div>
       </Card>
+      <DialogForm open={openForm} title="Create Storage Unit">
+        <Form
+          onClose={() => setOpenForm(false)}
+          storageUnits={storageUnits}
+          sizes={sizes}
+        />
+      </DialogForm>
+      <CreateFab label="Create Storage Unit" onClick={() => createStorageUnit()} />
     </>
   );
 }
 
+StorageUnits.defaultProps = {
+  sizes: [{}],
+};
+
 StorageUnits.propTypes = {
   storageUnits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.object),
 };

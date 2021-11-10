@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Link from '@mui/material/Link';
@@ -21,13 +20,13 @@ import DialogForm from '@/Components/DialogForm';
 import UserForm from '@/Pages/User/UserForm';
 
 export default function UserInfo({ user, storageUnits }) {
-  const [openCreate, setOpenCreate] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
   const editUser = () => {
     Inertia.reload({
       preserveState: true,
       only: ['storageUnits'],
+      onFinish: () => setOpenEdit(true),
     });
-    setOpenCreate(true);
   };
 
   return (
@@ -124,15 +123,15 @@ export default function UserInfo({ user, storageUnits }) {
           ))}
         </CardContent>
       </Card>
-      <DialogForm open={openCreate} title="Edit User">
-        <UserForm onClose={() => setOpenCreate(false)} storageUnits={storageUnits} user={user} />
+      <DialogForm open={openEdit} title="Edit User">
+        <UserForm onClose={() => setOpenEdit(false)} storageUnits={storageUnits} user={user} />
       </DialogForm>
     </>
   );
 }
 
 UserInfo.defaultProps = {
-  storageUnits: [{}],
+  storageUnits: null,
 };
 
 UserInfo.propTypes = {

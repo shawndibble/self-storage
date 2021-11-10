@@ -90,7 +90,6 @@ class UserControllerTest extends TestCase
     /** @test */
     public function storing_a_user_protects_sensitive_fields(): void
     {
-        $this->withoutExceptionHandling();
         $response = $this->actingAs($this->admin)->from('/users')->post('/users', [
             'name' => 'Sally Gene',
             'email_verified_at' => now(),

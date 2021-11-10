@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\StorageUnitController;
-use App\Http\Requests\StorageUnitStoreRequest;
+use App\Http\Requests\StorageUnitRequest;
 use App\Http\Requests\StorageUnitUpdateRequest;
 use App\Models\Size;
 use App\Models\StorageUnit;
@@ -43,25 +43,13 @@ class StorageUnitControllerTest extends TestCase
             ->has('storageUnits', 3));
     }
 
-
-    /** @test */
-    public function create_displays_view()
-    {
-        $response = $this->actingAs($this->admin)
-            ->get(route('storage-units.create'));
-
-        $response->assertInertia(fn(Assert $page) => $page
-            ->component('StorageUnit/Create'));
-    }
-
-
     /** @test */
     public function store_uses_form_request_validation()
     {
         $this->assertActionUsesFormRequest(
             StorageUnitController::class,
             'store',
-            StorageUnitStoreRequest::class
+            StorageUnitRequest::class
         );
     }
 
@@ -113,7 +101,7 @@ class StorageUnitControllerTest extends TestCase
         $this->assertActionUsesFormRequest(
             StorageUnitController::class,
             'update',
-            StorageUnitUpdateRequest::class
+            StorageUnitRequest::class
         );
     }
 

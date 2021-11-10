@@ -12,7 +12,7 @@ class StorageUnitRepository
             ->select('id', 'name', 'user_id')
             ->get()
             ->map(function ($record) {
-                $assignment = $record->user->id ? " (assigned to {$record->user->name})" : "";
+                $assignment = $record->user && $record->user->id ? " (assigned to {$record->user->name})" : "";
                 return [
                     'id' => $record->id,
                     'label' => "Unit {$record->name}{$assignment}"];

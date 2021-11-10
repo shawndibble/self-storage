@@ -9,7 +9,7 @@ export default function CreateFab({ label, onClick }) {
       color="primary"
       aria-label={label}
       sx={{ position: 'absolute', bottom: 24, right: 24 }}
-      onClick={onClick()}
+      onClick={() => onClick()}
     >
       <AddIcon />
     </Fab>

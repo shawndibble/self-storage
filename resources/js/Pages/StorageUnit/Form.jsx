@@ -10,7 +10,9 @@ import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@/Components/Form/TextField';
 
-export default function Form({ onClose, storageUnit, sizes }) {
+export default function Form({
+  onClose, storageUnit, sizes, users,
+}) {
   const { enqueueSnackbar } = useSnackbar();
 
   const {
@@ -18,9 +20,9 @@ export default function Form({ onClose, storageUnit, sizes }) {
   } = useForm({
     name: '',
     size_id: '',
-    user_id: null,
     notes: '',
     ...storageUnit,
+    user_id: storageUnit.user_id ?? '',
   });
 
   function handleChange(e) {
@@ -51,6 +53,7 @@ export default function Form({ onClose, storageUnit, sizes }) {
               defaultValue={data.name}
               onChange={handleChange}
               error={errors.name}
+              required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -63,6 +66,7 @@ export default function Form({ onClose, storageUnit, sizes }) {
                 value={data.size_id}
                 onChange={handleChange}
                 error={errors.size_id}
+                required
               >
                 <MenuItem sx={{ color: 'gray' }} value=""><em>Select unit size</em></MenuItem>
                 {sizes.map(({ id, name }) => (
@@ -72,6 +76,25 @@ export default function Form({ onClose, storageUnit, sizes }) {
                 ))}
               </TextField>
             )}
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="user_id"
+              select
+              label="Assigned User"
+              value={data.user_id}
+              onChange={handleChange}
+              helperText="Assign Storage Unit"
+              variant="standard"
+              fullWidth
+            >
+              <MenuItem key={0} value=""><em>Unassigned</em></MenuItem>
+              {users.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -99,6 +122,7 @@ export default function Form({ onClose, storageUnit, sizes }) {
 
 Form.defaultProps = {
   storageUnit: {},
+  users: [{}],
 };
 
 Form.propTypes = {
@@ -108,5 +132,10 @@ Form.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     notes: PropTypes.string,
+    user_id: PropTypes.number,
   }),
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
 };

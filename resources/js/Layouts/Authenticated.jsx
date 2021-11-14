@@ -11,7 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Slide from '@mui/material/Slide';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -19,27 +18,7 @@ import PropTypes from 'prop-types';
 import { SnackbarProvider } from 'notistack';
 import NavItems from './NavItems';
 import PageName from './PageName';
-
-function Copyright({ site, ...props }) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href={site.url}>
-        {site.name}
-      </Link>
-      {' '}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
-
-Copyright.propTypes = {
-  site: PropTypes.shape({
-    name: PropTypes.string,
-    url: PropTypes.string,
-  }).isRequired,
-};
+import Copyright from './Copyright';
 
 const drawerWidth = 240;
 
@@ -81,8 +60,7 @@ function Layout({ children }) {
     const page = Object.keys(props).filter(
       (key) => type.name.toLowerCase().includes(key.toLowerCase()),
     );
-    const { name } = !!props[page] && props[page];
-    const level2 = name || false;
+    const level2 = !!props[page] && props[page].name;
     return (
       <>
         {' '}

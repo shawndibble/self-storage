@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorageUnitRequest extends FormRequest
+class StorageUnitUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StorageUnitRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
-            'size_id' => ['required', 'integer', 'exists:sizes,id'],
+            'name' => ['sometimes', 'required', 'string'],
+            'size_id' => ['sometimes', 'required', 'integer', 'exists:sizes,id'],
             'user_id' => ['integer', 'exists:users,id', 'nullable'],
             'is_locked' => ['sometimes', 'required', 'integer'],
             'notes' => ['string', 'nullable'],

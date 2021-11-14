@@ -16,7 +16,7 @@ import { currencyFormat } from '@/Helpers/Formatters';
 import Form from '@/Pages/StorageUnit/Form';
 import DialogForm from '@/Components/DialogForm';
 
-export default function StorageUnitInfo({ storageUnit, sizes }) {
+export default function StorageUnitInfo({ storageUnit, sizes, users }) {
   const [openEdit, setOpenEdit] = React.useState(false);
   const editStorageUnit = () => {
     Inertia.reload({
@@ -63,14 +63,16 @@ export default function StorageUnitInfo({ storageUnit, sizes }) {
                 Customer:
               </TableCell>
               <TableCell>
-                <Link component={InertiaLink} href={`/users/${storageUnit.user.id}`}>{storageUnit.user.name}</Link>
+                {!storageUnit.user ? <em>Unassigned</em> : (
+                  <Link component={InertiaLink} href={`/users/${storageUnit.user.id}`}>{storageUnit.user.name}</Link>
+                )}
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </Card>
       <DialogForm open={openEdit} title="Edit Storage Unit">
-        <Form onClose={() => setOpenEdit(false)} storageUnit={storageUnit} sizes={sizes} />
+        <Form onClose={() => setOpenEdit(false)} storageUnit={storageUnit} sizes={sizes} users={users} />
       </DialogForm>
     </>
   );
@@ -78,6 +80,7 @@ export default function StorageUnitInfo({ storageUnit, sizes }) {
 
 StorageUnitInfo.defaultProps = {
   sizes: [{}],
+  users: [{}],
 };
 
 StorageUnitInfo.propTypes = {
@@ -93,4 +96,8 @@ StorageUnitInfo.propTypes = {
     }),
   }).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.object),
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
 };

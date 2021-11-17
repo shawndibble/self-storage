@@ -14,7 +14,7 @@ plugins:
 rules:
   react/jsx-props-no-spreading: off
   react/jsx-no-bind: off
-
+  react/function-component-definition: off
 settings:
   import/resolver:
     alias:

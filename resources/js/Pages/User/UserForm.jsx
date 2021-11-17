@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
+import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/inertia-react';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
@@ -28,6 +29,13 @@ export default function UserForm({ onClose, storageUnits, user }) {
     ...user,
   });
 
+  React.useEffect(() => {
+    Inertia.reload({
+      preserveState: true,
+      only: ['storageUnits'],
+    });
+  }, [errors]);
+
   function handleChange(e) {
     const key = e.target.id ?? e.target.name;
     setData(key, e.target.value);
@@ -36,6 +44,7 @@ export default function UserForm({ onClose, storageUnits, user }) {
   function handleSubmit(e) {
     e.preventDefault();
     const options = {
+      preserveState: true,
       onSuccess: ({ props: { flash } }) => {
         enqueueSnackbar(flash?.message, { variant: 'success' });
         onClose();

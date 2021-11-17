@@ -20,18 +20,14 @@ export default function StorageUnits({ storageUnits, sizes }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const [openForm, setOpenForm] = React.useState(false);
-  const createStorageUnit = () => {
-    Inertia.reload({
-      preserveState: true,
-      only: ['sizes'],
-      onFinish: setOpenForm(true),
-    });
-  };
+  const createStorageUnit = () => setOpenForm(true);
 
   const toggleLock = ({ row }) => Inertia.patch(
     `/storage-units/${row?.id}`,
     { is_locked: row.is_locked ? 0 : 1 },
-    { onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }) },
+    {
+      onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),
+    },
   );
 
   const columns = [

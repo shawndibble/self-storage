@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Inertia } from '@inertiajs/inertia';
 import TextField from '@/Components/Form/TextField';
 
 export default function Form({
@@ -24,6 +25,13 @@ export default function Form({
     ...storageUnit,
     user_id: storageUnit.user_id ?? '',
   });
+
+  React.useEffect(() => {
+    Inertia.reload({
+      preserveState: true,
+      only: ['sizes', 'users'],
+    });
+  }, [errors]);
 
   function handleChange(e) {
     const key = e.target.id ?? e.target.name;

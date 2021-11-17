@@ -15,13 +15,7 @@ const openPage = ({ row }) => {
 
 export default function Users({ users, storageUnits }) {
   const [openCreate, setOpenCreate] = React.useState(false);
-  const createUser = () => {
-    Inertia.reload({
-      preserveState: true,
-      only: ['storageUnits'],
-    });
-    setOpenCreate(true);
-  };
+  const createUser = () => setOpenCreate(true);
 
   const columns = [
     {

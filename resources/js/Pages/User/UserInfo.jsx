@@ -13,7 +13,6 @@ import Link from '@mui/material/Link';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import EditIcon from '@mui/icons-material/Edit';
-import { Inertia } from '@inertiajs/inertia';
 import IconButton from '@mui/material/IconButton';
 import { currencyFormat } from '@/Helpers/Formatters';
 import DialogForm from '@/Components/DialogForm';
@@ -21,13 +20,7 @@ import UserForm from '@/Pages/User/UserForm';
 
 export default function UserInfo({ user, storageUnits }) {
   const [openEdit, setOpenEdit] = React.useState(false);
-  const editUser = () => {
-    Inertia.reload({
-      preserveState: true,
-      only: ['storageUnits'],
-      onFinish: () => setOpenEdit(true),
-    });
-  };
+  const editUser = () => setOpenEdit(true);
 
   return (
     <>

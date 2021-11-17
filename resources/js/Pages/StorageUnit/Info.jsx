@@ -11,7 +11,6 @@ import TableCell from '@mui/material/TableCell';
 import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
 import { Link as InertiaLink } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
 import { currencyFormat } from '@/Helpers/Formatters';
 import Form from '@/Pages/StorageUnit/Form';
 import DialogForm from '@/Components/DialogForm';
@@ -19,11 +18,7 @@ import DialogForm from '@/Components/DialogForm';
 export default function StorageUnitInfo({ storageUnit, sizes, users }) {
   const [openEdit, setOpenEdit] = React.useState(false);
   const editStorageUnit = () => {
-    Inertia.reload({
-      preserveState: true,
-      only: ['sizes'],
-      onFinish: setOpenEdit(true),
-    });
+    setOpenEdit(true);
   };
 
   return (
@@ -64,7 +59,9 @@ export default function StorageUnitInfo({ storageUnit, sizes, users }) {
               </TableCell>
               <TableCell>
                 {!storageUnit.user ? <em>Unassigned</em> : (
-                  <Link component={InertiaLink} href={`/users/${storageUnit.user.id}`}>{storageUnit.user.name}</Link>
+                  <Link component={InertiaLink} href={`/users/${storageUnit.user.id}`}>
+                    {storageUnit.user.name}
+                  </Link>
                 )}
               </TableCell>
             </TableRow>
@@ -72,7 +69,12 @@ export default function StorageUnitInfo({ storageUnit, sizes, users }) {
         </Table>
       </Card>
       <DialogForm open={openEdit} title="Edit Storage Unit">
-        <Form onClose={() => setOpenEdit(false)} storageUnit={storageUnit} sizes={sizes} users={users} />
+        <Form
+          onClose={() => setOpenEdit(false)}
+          storageUnit={storageUnit}
+          sizes={sizes}
+          users={users}
+        />
       </DialogForm>
     </>
   );

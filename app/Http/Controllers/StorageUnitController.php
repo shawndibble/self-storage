@@ -20,7 +20,8 @@ class StorageUnitController extends Controller
     {
         return Inertia::render('StorageUnit/Index', [
             'storageUnits' => StorageUnit::with('size', 'user:id,name')->get(),
-            'sizes' => Size::all()
+            'sizes' => Inertia::lazy(fn() => Size::all()),
+            'users' => Inertia::lazy(fn() => User::select([ 'id', 'name' ])->get())
         ]);
     }
 
@@ -44,9 +45,9 @@ class StorageUnitController extends Controller
     public function show($identity): Response
     {
         return Inertia::render('StorageUnit/Show', [
-            'sizes' => Size::all(),
             'storageUnit' => StorageUnit::with(['user:id,name', 'size'])->findOrFail($identity),
-            'users' => User::select([ 'id', 'name' ])->get()
+            'sizes' => Inertia::lazy(fn() => Size::all()),
+            'users' => Inertia::lazy(fn() => User::select([ 'id', 'name' ])->get())
         ]);
     }
 

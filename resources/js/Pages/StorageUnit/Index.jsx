@@ -30,6 +30,16 @@ export default function StorageUnits({ storageUnits, sizes }) {
     },
   );
 
+  const ViewPageLink = React.useCallback(
+    (params) => <GridActionsCellItem icon={<OpenInBrowserIcon />} onClick={() => openPage(params)} label="Open" />,
+    [],
+  );
+
+  const ToggleLockLink = React.useCallback(
+    (params) => <GridActionsCellItem icon={<Lock />} onClick={() => toggleLock(params)} label="Toggle Lock" showInMenu />,
+    [],
+  );
+
   const columns = [
     {
       field: 'name', headerName: 'Unit', flex: 0, minWidth: 50,
@@ -44,8 +54,11 @@ export default function StorageUnits({ storageUnits, sizes }) {
       minWidth: 210,
       filterable: false,
       sortComparator: (
-        v1, v2, cellParams1, cellParams2,
-      ) => (cellParams1.value?.name).localeCompare(cellParams2.value?.name),
+        v1,
+        v2,
+        cellParams1,
+        cellParams2,
+      ) => (cellParams1.value?.name)?.localeCompare(cellParams2.value?.name),
       renderCell: ({ value }) => value?.name && (<VisitUser visitUser={visitUser} value={value} />),
     },
     {
@@ -59,8 +72,8 @@ export default function StorageUnits({ storageUnits, sizes }) {
       field: 'actions',
       type: 'actions',
       getActions: (params) => [
-        <GridActionsCellItem icon={<OpenInBrowserIcon />} onClick={() => openPage(params)} label="Open" />,
-        <GridActionsCellItem icon={<Lock />} onClick={() => toggleLock(params)} label="Toggle Lock" showInMenu />,
+        <ViewPageLink params={params} />,
+        <ToggleLockLink params={params} />,
       ],
     },
   ];

@@ -58,7 +58,7 @@ class StorageUnitControllerTest extends TestCase
     {
         $name = $this->faker->name;
         $size = Size::factory()->create();
-        $is_locked = $this->faker->numberBetween(-8, 8);
+        $is_locked = 0;
 
         $response = $this->actingAs($this->admin)
             ->from('/storage-units')
@@ -111,7 +111,7 @@ class StorageUnitControllerTest extends TestCase
         $storageUnit = StorageUnit::factory()->create();
         $name = $this->faker->name;
         $size = Size::factory()->create();
-        $is_locked = $this->faker->numberBetween(-8, 8);
+        $is_locked = 0;
 
         $response = $this->actingAs($this->admin)
             ->from('/storage-units')

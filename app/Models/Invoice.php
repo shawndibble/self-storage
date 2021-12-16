@@ -28,9 +28,9 @@ class Invoice extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'due_date' => 'datetime'
+        'due_date' => 'datetime:M d, Y',
+        'created_at' => 'datetime:M d, Y',
     ];
-
 
     public function user()
     {

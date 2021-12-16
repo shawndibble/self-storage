@@ -73,7 +73,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
       type: 'actions',
       getActions: (params) => [
         <ViewPageLink params={params} />,
-        <ToggleLockLink params={params} />,
+        <ToggleLockLink params={params} showInMenu />,
       ],
     },
   ];

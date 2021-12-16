@@ -27,7 +27,7 @@ class StorageUnitUpdateRequest extends FormRequest
             'name' => ['sometimes', 'required', 'string'],
             'size_id' => ['sometimes', 'required', 'integer', 'exists:sizes,id'],
             'user_id' => ['integer', 'exists:users,id', 'nullable'],
-            'is_locked' => ['sometimes', 'required', 'integer'],
+            'is_locked' => ['sometimes', 'required', 'boolean'],
             'notes' => ['string', 'nullable'],
         ];
     }

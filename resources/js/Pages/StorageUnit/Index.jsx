@@ -22,7 +22,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
   const [openForm, setOpenForm] = React.useState(false);
   const createStorageUnit = () => setOpenForm(true);
 
-  const toggleLock = ({ row }) => Inertia.patch(
+  const toggleLock = ({ params: { row } }) => Inertia.patch(
     `/storage-units/${row?.id}`,
     { is_locked: row.is_locked ? 0 : 1 },
     {

@@ -44,6 +44,13 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
+    protected $appends = ['full_address'];
+
+    public function getFullAddressAttribute(): string
+    {
+        return "{$this->address} {$this->address2} {$this->city}, {$this->state} {$this->zip}";
+    }
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);

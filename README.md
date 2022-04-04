@@ -21,7 +21,7 @@ mv .env.example .env
     -u "$(id -u):$(id -g)" \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
-    laravelsail/php80-composer:latest \
+    laravelsail/php81-composer:latest \
     composer install --ignore-platform-reqs
 ```
 
@@ -43,7 +43,7 @@ sail up -d
 sail artisan key:generate
 ```
 
-6.  Install node_modules and build the application. 
+6.  Install node_modules and build the application.
 
 ```bash
 sail npm i && npm run dev

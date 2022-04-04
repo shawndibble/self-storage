@@ -9,7 +9,7 @@ use App\Models\Size;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
 
@@ -151,6 +151,6 @@ class SizeControllerTest extends TestCase
         $response->assertRedirect(route('sizes.index'))
             ->assertSessionHas('message', 'Size Deleted Successfully.');
 
-        $this->assertDeleted($size);
+        $this->assertModelMissing($size);
     }
 }

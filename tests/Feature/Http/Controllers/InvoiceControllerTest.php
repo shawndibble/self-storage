@@ -9,7 +9,7 @@ use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
 
@@ -70,7 +70,7 @@ class InvoiceControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $amount = $this->faker->numberBetween(1, 10000);
-        $dueDate = $this->faker->dateTime();
+        $dueDate = $this->faker->dateTime()->format('Y-m-d h:i:s');
 
         $response = $this->actingAs($this->admin)
             ->from('/invoices')
@@ -122,7 +122,7 @@ class InvoiceControllerTest extends TestCase
         $invoice = Invoice::factory()->create();
         $user = User::factory()->create();
         $amount = $this->faker->numberBetween(1, 10000);
-        $dueDate = $this->faker->dateTime();
+        $dueDate = $this->faker->dateTime()->format('Y-m-d h:i:s');
 
         $response = $this->actingAs($this->admin)
             ->from('/invoices')
@@ -156,6 +156,6 @@ class InvoiceControllerTest extends TestCase
         $response->assertRedirect('invoices')
             ->assertSessionHas('message', 'Invoice Deleted Successfully.');
 
-        $this->assertDeleted($invoice);
+        $this->assertModelMissing($invoice);
     }
 }

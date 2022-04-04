@@ -10,7 +10,7 @@ use App\Models\StorageUnit;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
 
@@ -145,6 +145,6 @@ class StorageUnitControllerTest extends TestCase
         $response->assertRedirect(route('storage-units.index'))
             ->assertSessionHas('message', 'Unit Deleted Successfully.');
 
-        $this->assertDeleted($storageUnit);
+        $this->assertModelMissing($storageUnit);
     }
 }

@@ -9,7 +9,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Inertia\Testing\Assert;
+use Inertia\Testing\AssertableInertia as Assert;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
 
@@ -69,7 +69,7 @@ class PaymentControllerTest extends TestCase
     public function store_saves_and_redirects()
     {
         $amount = $this->faker->numberBetween(10, 10000);
-        $paid_at = $this->faker->dateTime();
+        $paid_at = $this->faker->dateTime()->format('Y-m-d h:i:s');
 
         $response = $this->actingAs($this->admin)
             ->from('/payments')
@@ -122,7 +122,7 @@ class PaymentControllerTest extends TestCase
         $payment = Payment::factory()->create();
         $user = User::factory()->create();
         $amount = $this->faker->numberBetween(10, 10000);
-        $paid_at = $this->faker->dateTime();
+        $paid_at = $this->faker->dateTime()->format('Y-m-d h:i:s');
 
         $response = $this->actingAs($this->admin)
             ->from('/payments')
@@ -156,6 +156,6 @@ class PaymentControllerTest extends TestCase
         $response->assertRedirect(route('payments.index'))
             ->assertSessionHas('message', 'Payment Deleted Successfully.');
 
-        $this->assertDeleted($payment);
+        $this->assertModelMissing($payment);
     }
 }

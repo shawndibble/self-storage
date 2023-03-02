@@ -18,6 +18,16 @@ import { currencyFormat } from '@/Helpers/Formatters';
 import DialogForm from '@/Components/DialogForm';
 import UserForm from '@/Pages/User/UserForm';
 
+function standardizePhone(phoneString) {
+  const cleanedNumber = ('' + phoneString).replace(/\D/g, '');
+  const matchedNumber = cleanedNumber.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (matchedNumber) {
+    const intlCode = (matchedNumber[1] ? '+1 ' : '');
+    return [intlCode, '(', matchedNumber[2], ') ', matchedNumber[3], '-', matchedNumber[4]].join('');
+  }
+  return null;
+}
+
 export default function UserInfo({ user, storageUnits }) {
   const [openEdit, setOpenEdit] = React.useState(false);
   const editUser = () => setOpenEdit(true);

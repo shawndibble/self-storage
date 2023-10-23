@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title inertia>{{ config('app.name', 'Self Storage') }}</title>
 
     <!-- Fonts -->
     <link
@@ -17,12 +17,10 @@
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
     <!-- Scripts -->
-    @routes
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    @viteReactRefresh
+    @vite(['resources/css/app.css', 'resources/js/app.jsx'])
+    @inertiaHead
 </head>
 <body class="font-sans antialiased">
 @inertia

@@ -1,9 +1,8 @@
 import React from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
-import { Inertia } from '@inertiajs/inertia';
+import { router, Head } from '@inertiajs/react';
 import Card from '@mui/material/Card';
-import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
@@ -13,8 +12,8 @@ import Form from '@/Pages/StorageUnit/Form';
 import VisitUser from '@/Components/DataTable/VisitUser';
 import CreateFab from '@/Components/CreateFab';
 
-const openPage = ({ row }) => Inertia.visit(`/storage-units/${row?.id}`);
-const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
+const openPage = ({ row }) => router.visit(`/storage-units/${row?.id}`);
+const visitUser = (userId) => router.visit(`/users/${userId}`);
 
 export default function StorageUnits({ storageUnits, sizes }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +21,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
   const [openForm, setOpenForm] = React.useState(false);
   const createStorageUnit = () => setOpenForm(true);
 
-  const toggleLock = ({ params: { row } }) => Inertia.patch(
+  const toggleLock = ({ params: { row } }) => router.patch(
     `/storage-units/${row?.id}`,
     { is_locked: row.is_locked ? 0 : 1 },
     {
@@ -71,6 +70,7 @@ export default function StorageUnits({ storageUnits, sizes }) {
     {
       field: 'actions',
       type: 'actions',
+      // eslint-disable-next-line react/no-unstable-nested-components
       getActions: (params) => [
         <ViewPageLink params={params} />,
         <ToggleLockLink params={params} showInMenu />,

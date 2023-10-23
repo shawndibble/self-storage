@@ -1,20 +1,19 @@
 import React from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
-import { Inertia } from '@inertiajs/inertia';
+import { router, Head } from '@inertiajs/react';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
-import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 import DialogForm from '@/Components/DialogForm';
 import CreateFab from '@/Components/CreateFab';
 import UserForm from './UserForm';
 
 const openPage = ({ row }) => {
-  Inertia.visit(`/users/${row?.id}`);
+  router.visit(`/users/${row?.id}`);
 };
 
 function escapeRegExp(value) {

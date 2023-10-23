@@ -19,7 +19,7 @@ import DialogForm from '@/Components/DialogForm';
 import UserForm from '@/Pages/User/UserForm';
 
 function standardizePhone(phoneString) {
-  const cleanedNumber = ('' + phoneString).replace(/\D/g, '');
+  const cleanedNumber = (`${phoneString}`).replace(/\D/g, '');
   const matchedNumber = cleanedNumber.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
   if (matchedNumber) {
     const intlCode = (matchedNumber[1] ? '+1 ' : '');

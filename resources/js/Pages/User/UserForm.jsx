@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import { Inertia } from '@inertiajs/inertia';
-import { useForm } from '@inertiajs/inertia-react';
+import { router, useForm } from '@inertiajs/react';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
@@ -30,7 +29,7 @@ export default function UserForm({ onClose, storageUnits, user }) {
   });
 
   React.useEffect(() => {
-    Inertia.reload({
+    router.reload({
       preserveState: true,
       only: ['storageUnits'],
     });

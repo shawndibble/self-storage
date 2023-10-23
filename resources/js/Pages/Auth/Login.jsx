@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 import React, { useEffect } from 'react';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import Checkbox from '@/Components/Checkbox';
 import Guest from '@/Layouts/Guest';
@@ -29,7 +28,7 @@ export default function Login({ status, canResetPassword }) {
   const submit = (e) => {
     e.preventDefault();
 
-    post(route('login'));
+    post('/login');
   };
 
   return (
@@ -78,7 +77,7 @@ export default function Login({ status, canResetPassword }) {
         </div>
 
         <div className="flex items-center justify-end mt-4">
-          <Link href={route('register')} className="ml-4 mr-4 text-sm text-gray-700 underline">
+          <Link href="/register" className="ml-4 mr-4 text-sm text-gray-700 underline">
             Register
           </Link>
 
@@ -87,7 +86,7 @@ export default function Login({ status, canResetPassword }) {
               {' '}
               |
               <Link
-                href={route('password.request')}
+                href="/forgot-password"
                 className="underline text-sm ml-4 text-gray-600 hover:text-gray-900"
               >
                 Forgot your password?

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
@@ -27,8 +27,7 @@ export default function Register() {
   const submit = (e) => {
     e.preventDefault();
 
-    // eslint-disable-next-line no-undef
-    post(route('register'));
+    post('/register');
   };
 
   return (
@@ -95,8 +94,7 @@ export default function Register() {
         </div>
 
         <div className="flex items-center justify-end mt-4">
-          {/* eslint-disable-next-line no-undef */}
-          <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
+          <Link href="/login" className="underline text-sm text-gray-600 hover:text-gray-900">
             Already registered?
           </Link>
 

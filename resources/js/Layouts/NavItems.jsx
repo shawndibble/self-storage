@@ -7,7 +7,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import DomainIcon from '@mui/icons-material/Domain';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 export default function NavItems({ page }) {
   const [path, setPath] = React.useState(window.location.pathname);
 
-  const navigateTo = (url, method = 'GET') => Inertia.visit(url, { method });
+  const navigateTo = (url, method = 'GET') => router.visit(url, { method });
 
   React.useMemo(() => setPath(window.location.pathname), [page]);
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, useForm } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
@@ -27,9 +27,7 @@ export default function ResetPassword({ token, email }) {
 
   const submit = (e) => {
     e.preventDefault();
-
-    // eslint-disable-next-line no-undef
-    post(route('password.update'));
+    post('/reset-password');
   };
 
   return (

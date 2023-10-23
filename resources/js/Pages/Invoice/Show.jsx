@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import { Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/react';
 import CardContent from '@mui/material/CardContent';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';

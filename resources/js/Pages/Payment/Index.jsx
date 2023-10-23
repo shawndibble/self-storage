@@ -1,15 +1,14 @@
 import React from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
-import { Inertia } from '@inertiajs/inertia';
+import { router, Head } from '@inertiajs/react';
 import Card from '@mui/material/Card';
-import { Head } from '@inertiajs/inertia-react';
 import PropTypes from 'prop-types';
 import { currencyFormat, dateFormat } from '@/Helpers/Formatters';
 import VisitUser from '@/Components/DataTable/VisitUser';
 
-const openPage = ({ row }) => Inertia.visit(`/payments/${row?.id}`);
-const visitUser = (userId) => Inertia.visit(`/users/${userId}`);
+const openPage = ({ row }) => router.visit(`/payments/${row?.id}`);
+const visitUser = (userId) => router.visit(`/users/${userId}`);
 
 export default function Payments({ payments }) {
   const columns = [
@@ -22,9 +21,7 @@ export default function Payments({ payments }) {
       flex: 2,
       minWidth: 200,
       filterable: false,
-      sortComparator: (
-        v1, v2, cellParams1, cellParams2,
-      ) => (cellParams1.value.name).localeCompare(cellParams2.value.name),
+      sortComparator: (v1, v2, cellParams1, cellParams2) => (cellParams1.value.name).localeCompare(cellParams2.value.name),
       renderCell: ({ value }) => value?.name && (<VisitUser visitUser={visitUser} value={value} />),
     },
     {

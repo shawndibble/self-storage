@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 
@@ -11,7 +11,7 @@ export default function VerifyEmail({ status }) {
   const submit = (e) => {
     e.preventDefault();
 
-    post(route('verification.send'));
+    post('/email/verification-notification');
   };
 
   return (
@@ -36,7 +36,7 @@ export default function VerifyEmail({ status }) {
           <Button processing={processing}>Resend Verification Email</Button>
 
           <Link
-            href={route('logout')}
+            href="/logout"
             method="post"
             as="button"
             className="underline text-sm text-gray-600 hover:text-gray-900"

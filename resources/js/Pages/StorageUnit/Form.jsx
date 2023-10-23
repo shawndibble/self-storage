@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm, router } from '@inertiajs/react';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
 import MenuItem from '@mui/material/MenuItem';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Inertia } from '@inertiajs/inertia';
 import TextField from '@/Components/Form/TextField';
 
 export default function Form({
@@ -27,7 +26,7 @@ export default function Form({
   });
 
   React.useEffect(() => {
-    Inertia.reload({
+    router.reload({
       preserveState: true,
       only: ['sizes', 'users'],
     });

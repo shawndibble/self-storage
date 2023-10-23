@@ -1,13 +1,13 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import PropTypes from 'prop-types';
-import { Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { currencyFormat, daysAgoFormat } from '@/Helpers/Formatters';
 import UserInfo from './UserInfo';
 import UserTransactions from './UserTransactions';
-import { currencyFormat, daysAgoFormat } from '@/Helpers/Formatters';
 
 export default function UserDetails({
   user, transactions, invoiceTotal, paymentTotal,

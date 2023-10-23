@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Info from '@/Pages/StorageUnit/Info';

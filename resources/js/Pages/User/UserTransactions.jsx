@@ -4,7 +4,7 @@ import React from 'react';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { currencyFormat, dateFormat } from '@/Helpers/Formatters';
@@ -16,7 +16,7 @@ export default function UserTransactions({ transactions }) {
   const [rowParams, setRowParams] = React.useState({ type: '', amount: 0 });
 
   const typeURL = (row) => `/${row.type.toLowerCase()}s/${row.record_id}`;
-  const openTransaction = (row) => Inertia.get(typeURL(row));
+  const openTransaction = (row) => router.get(typeURL(row));
   // eslint-disable-next-line no-console
   const editTransaction = (row) => console.log(row);
   const deleteTransaction = (row) => {
@@ -25,7 +25,7 @@ export default function UserTransactions({ transactions }) {
   };
 
   const deleteConfirm = (row) => {
-    Inertia.delete(typeURL(row), {
+    router.delete(typeURL(row), {
       onSuccess: ({ props: { flash } }) => enqueueSnackbar(flash?.message, { variant: 'success' }),
     });
     setDeleteOpen(false);

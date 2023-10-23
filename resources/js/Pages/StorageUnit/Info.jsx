@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
-import { Link as InertiaLink } from '@inertiajs/inertia-react';
+import { Link as InertiaLink } from '@inertiajs/react';
 import { currencyFormat } from '@/Helpers/Formatters';
 import Form from '@/Pages/StorageUnit/Form';
 import DialogForm from '@/Components/DialogForm';

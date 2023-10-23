@@ -1,14 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies, global-require */
-const defaultTheme = require('tailwindcss/defaultTheme');
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
 
-module.exports = {
-  purge: [
-    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-    './storage/framework/views/*.php',
-    './resources/views/**/*.blade.php',
-    './resources/js/**/*.js',
+export default {
+  content: [
+    './resources/**/*.blade.php',
+    './resources/**/*.{js,ts,jsx,tsx}',
   ],
-
   theme: {
     extend: {
       fontFamily: {
@@ -16,12 +13,10 @@ module.exports = {
       },
     },
   },
-
   variants: {
     extend: {
       opacity: ['disabled'],
     },
   },
-
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [forms],
 };

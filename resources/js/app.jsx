@@ -1,26 +1,25 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { createInertiaApp } from '@inertiajs/inertia-react';
-import { InertiaProgress } from '@inertiajs/progress';
+import { createInertiaApp } from '@inertiajs/react';
+import { createRoot } from 'react-dom/client';
 import Authenticated from '@/Layouts/Authenticated';
-
-require('./bootstrap');
+import './bootstrap';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
   resolve: (name) => {
-    // eslint-disable-next-line global-require,import/no-dynamic-require
-    const page = require(`./Pages/${name}`).default;
+    const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
+    const page = pages[`./Pages/${name}.jsx`];
     if (!name.startsWith('Auth/')) {
-      page.layout = Authenticated;
+      page.default.layout = Authenticated;
     }
     return page;
   },
   setup({ el, App, props }) {
-    return render(<App {...props} />, el);
+    createRoot(el).render(<App {...props} />);
+  },
+  progress: {
+    color: '#4B5563',
   },
 });
-
-InertiaProgress.init({ color: '#4B5563' });

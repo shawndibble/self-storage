@@ -32,4 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('settings', SettingsController::class);
 });
 
+Route::get('/demo-reset', function(){
+    \Artisan::call('migrate:fresh --seed');
+    dd('demo database reset complete!');
+});
+
 require __DIR__ . '/auth.php';

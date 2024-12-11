@@ -32,7 +32,7 @@
     "@mui/lab": "^5.0.0-alpha.149",
     "@mui/material": "^5.14.14",
     "@mui/x-data-grid": "^6.16.3",
-    "axios": "1.7.4",
+    "axios": "1.7.8",
     "laravel-vite-plugin": "^0.8.1",
     "lodash": "4.17.21",
     "notistack": "^3.0.0",

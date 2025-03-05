@@ -10,7 +10,7 @@
     "php": "^8.1",
     "guzzlehttp/guzzle": "7.4.5",
     "inertiajs/inertia-laravel": "^0.6.10",
-    "laravel/framework": "^10.0",
+    "laravel/framework": "^11.0",
     "laravel/sanctum": "^3.0",
     "laravel/tinker": "^2.8.0"
   },

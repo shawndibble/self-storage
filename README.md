@@ -74,3 +74,5 @@ Files are compiled with [Laravel Mix](https://laravel.com/docs/8.x/mix)
 ## SAIL
 
 Please visit [the sail documentation](https://laravel.com/docs/8.x/sail#introduction) for details on using sail. Most laravel, composer and npm commands should be preceeded with the `sail` command.
+
+This project is tested with BrowserStack.

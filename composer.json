@@ -8,22 +8,22 @@
   "license": "MIT",
   "require": {
     "php": "^8.1",
-    "guzzlehttp/guzzle": "7.4.5",
-    "inertiajs/inertia-laravel": "^0.6.10",
+    "guzzlehttp/guzzle": "7.10.0",
+    "inertiajs/inertia-laravel": "^2.0.0",
     "laravel/framework": "^10.0",
-    "laravel/sanctum": "^3.0",
+    "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.8.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.9.0",
-    "barryvdh/laravel-ide-helper": "^2.13.0",
-    "fakerphp/faker": "1.19.0",
-    "jasonmccreary/laravel-test-assertions": "2.3.0",
-    "laravel/breeze": "^1.25.0",
+    "barryvdh/laravel-ide-helper": "^3.0.0",
+    "fakerphp/faker": "1.24.1",
+    "jasonmccreary/laravel-test-assertions": "2.8.0",
+    "laravel/breeze": "^2.0.0",
     "laravel/sail": "^1.25",
     "mockery/mockery": "^1.6.0",
-    "nunomaduro/collision": "^7.0",
-    "phpunit/phpunit": "^10.0",
+    "nunomaduro/collision": "^8.0",
+    "phpunit/phpunit": "^12.0",
     "spatie/laravel-ignition": "^2.0"
   },
   "autoload": {
